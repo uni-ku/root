@@ -1,0 +1,26 @@
+{
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "editor.formatOnSave": false,
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.validate": [
+    "svelte",
+    "astro",
+    "html",
+    "css",
+    "less",
+    "scss",
+    "json",
+    "jsonc",
+    "yaml",
+    "yml",
+    "markdown",
+    "toml"
+  ],
+}
