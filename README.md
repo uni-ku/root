@@ -57,4 +57,11 @@ export function createApp() {
 ### 💖 赞助
 
 如果我的工作帮助到了您，可以请我吃包辣条，能够使我能量满满 ⚡
+
 - [点这里请吃辣条](https://github.com/Skiyee/sponsors) 👈
+
+<p align="center">
+  <a href="https://github.com/Skiyee/sponsors">
+    <img alt="sponsors" src="https://cdn.jsdelivr.net/gh/Skiyee/Skiyee/sponsors.svg"/>
+  </a>
+</p>
