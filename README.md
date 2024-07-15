@@ -5,7 +5,7 @@
 ### 📦 安装
 
 ```bash
-pnpm add @uni-ku/root
+pnpm add -D @uni-ku/root
 ```
 
 ### 🚀 使用
