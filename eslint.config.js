@@ -1,8 +1,3 @@
-export default [
-  {
-    rules: {
-      "no-unused-vars": "error",
-      "no-undef": "error"
-    }
-  }
-];
+import antfu from '@antfu/eslint-config'
+
+export default antfu()
