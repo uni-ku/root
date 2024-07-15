@@ -24,9 +24,9 @@ export default defineConfig({
 })
 ```
 
-2. 在项目入口 `App.vue` 内，并往 `template` 中添加所需全局组件或代码
+2. 注册全局组件
 
-> 注意：组件或变量都需要在全局中引入，否则无法正常渲染
+> 建议配合 `@uni-helper/vite-plugin-uni-components` 使用，可以省略以下全局注册组件
 
 ```javascript
 // main.*
@@ -39,14 +39,16 @@ export function createApp() {
 }
 ```
 
+3. 在项目入口 `App.vue` 内，并往 `template` 中添加所需全局组件或代码
+
+> 注意：组件或变量都需要在全局中引入，否则无法正常渲染
+
 ```javascript
 // App.vue
 <template>
   <LoginModal />
 </template>
 ```
-
-> 建议配合 `@uni-helper/vite-plugin-uni-components` 使用，可以省略以上全局注册组件
 
 ### 📝 待办
 
