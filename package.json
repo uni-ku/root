@@ -19,7 +19,7 @@
   "scripts": {
     "build": "unbuild",
     "dev": "unbuild --stub",
-    "release": "npm build && bumpp",
+    "release": "npm run build && bumpp",
     "example:dev:h5": "npm -C examples run dev",
     "example:build:h5": "npm -C examples run build",
     "example:dev:mp-weixin": "npm -C examples run dev:mp-weixin",
