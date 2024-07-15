@@ -3,23 +3,46 @@
   "type": "module",
   "version": "0.0.1",
   "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "release": "pnpm test && pnpm build && bumpp",
+    "example:dev:h5": "npm -C examples run dev",
+    "example:build:h5": "npm -C examples run build",
+    "example:dev:mp-weixin": "npm -C examples run dev:mp-weixin",
+    "example:build:mp-weixin": "npm -C examples run build:mp-weixin",
     "prepare": "simple-git-hooks",
     "lint": "eslint . --fix"
+  },
+  "dependencies": {
+    "@vue/compiler-sfc": "^3.4.31",
+    "jsonc-parser": "^3.3.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.22.2",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "@vue/compiler-sfc": "^3.4.31",
-    "chokidar": "^3.6.0",
+    "bumpp": "^9.4.1",
     "commitizen": "^4.3.0",
     "cz-git": "^1.9.1",
     "eslint": "^9.3.0",
-    "jsonc-parser": "^3.3.1",
     "lint-staged": "^15.2.2",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.4.5",
+    "unbuild": "^2.0.0",
     "vite": "^5.3.3",
     "vitest": "^2.0.2"
   },

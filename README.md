@@ -1,16 +1,58 @@
-## 快速起手模板
+## Root
 
-没有主观依赖，不干扰主体项目，只为快速起步
+借助 Vite 模拟出虚拟的全局组件，解决 uniapp 无根组件导致无法使用全局共享组件问题
 
-### 📦 依赖
+### 📦 安装
 
-- [TypeScript](https://www.typescriptlang.org)
-- [Eslint](https://eslint.org)
-- [Commitlint](https://commitlint.js.org/)
-- [Commitizen](https://commitizen.github.io/cz-cli/)
-- [CzGit](https://github.com/Zhengqbbb/cz-git)
-- [LintStaged](https://github.com/lint-staged/lint-staged)
-- [SimpleGitHooks](https://github.com/toplenboren/simple-git-hooks)
+```bash
+pnpm add @uni-ku/root
+```
+
+### 🚀 使用
+
+1. 在 vite.config.* 中引入 `@uni-ku/root`
+
+```javascript
+import { defineConfig } from 'vite'
+import UniKuRoot from '@uni-ku/root'
+
+export default defineConfig({
+  plugins: [
+    // 如果有插件更改 pages.json 的请把 UniKuRoot 放其后面
+    UniKuRoot()
+  ]
+})
+```
+
+2. 在项目入口 `App.vue` 内，并往 `template` 中添加所需全局组件或代码
+
+> 注意：组件或变量都需要在全局中引入，否则无法正常渲染
+
+```javascript
+// main.*
+import LoginModal from '@/components/LoginModal'
+
+export function createApp() {
+  const app = createSSRApp(App)
+
+  app.component('LoginModal', LoginModal)
+}
+```
+
+```javascript
+// App.vue
+<template>
+  <LoginModal />
+</template>
+```
+
+> 建议配合 `@uni-helper/vite-plugin-uni-components` 使用，可以省略以上全局注册组件
+
+### 📝 待办
+
+- [ ] 热更新
+- [ ] 补全单元测试
+- [ ] 更灵活的使用方式
 
 ### 💖 赞助
 
