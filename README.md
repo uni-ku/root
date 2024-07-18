@@ -10,15 +10,17 @@ pnpm add -D @uni-ku/root
 
 ### 🚀 使用
 
-1. 在 vite.config.* 中引入 `@uni-ku/root`
+1. 引入 `@uni-ku/root`
 
 ```javascript
+// vite.config.*
+
 import { defineConfig } from 'vite'
 import UniKuRoot from '@uni-ku/root'
 
 export default defineConfig({
   plugins: [
-    // 如果有插件更改 pages.json 的请把 UniKuRoot 放其后面
+    // 若存在改变 pages.json 的插件，请将 UniKuRoot 放置其后
     UniKuRoot()
   ]
 })
@@ -30,31 +32,43 @@ export default defineConfig({
 
 ```javascript
 // main.*
+
 import LoginModal from '@/components/LoginModal'
 
 export function createApp() {
   const app = createSSRApp(App)
 
   app.component('LoginModal', LoginModal)
+
+  return {
+    app
+  }
 }
 ```
 
-3. 在项目入口 `App.vue` 内，并往 `template` 中添加所需全局组件或代码
+3. 添加全局所需组件或代码
 
-> 注意：组件或变量都需要在全局中引入，否则无法正常渲染
+> 注意：组件或变量都需要在**全局中共享**，否则无法正常渲染与使用
 
 ```javascript
 // App.vue
+
 <template>
   <LoginModal />
 </template>
 ```
 
+### ✨ 例子
+
+全局Toast组件核心实现请关注:  `src/components` `src/composables`
+
+- 🔗 [查看完整例子](https://github.com/uni-ku/root/tree/main/examples)
+
 ### 📝 待办
 
 - [ ] 热更新
 - [ ] 补全单元测试
-- [ ] 更灵活的使用方式
+- [ ] 使 App.vue 与正常 Vue文件一样 被使用
 
 ### 💖 赞助
 

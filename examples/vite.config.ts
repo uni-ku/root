@@ -1,3 +1,5 @@
+import { URL, fileURLToPath } from 'node:url'
+
 import { defineConfig } from 'vite'
 import Uni from '@dcloudio/vite-plugin-uni'
 
@@ -8,4 +10,9 @@ export default defineConfig({
     UniKuRoot(),
     Uni(),
   ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
 })

@@ -4,8 +4,12 @@
     "jsx": "preserve",
     "lib": ["esnext", "dom"],
     "useDefineForClassFields": true,
+    "baseUrl": "./",
     "module": "esnext",
     "moduleResolution": "node",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "resolveJsonModule": true,
     "types": ["@dcloudio/types"],
     "strict": true,

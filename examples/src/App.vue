@@ -1,5 +1,8 @@
+<script setup lang="ts">
+// eslint-disable-next-line no-console
+console.log('UniKuRoot')
+</script>
+
 <template>
-  <view>
-    This is Uni Ku Root
-  </view>
+  <GlobalToast />
 </template>
