@@ -2,6 +2,26 @@
   "name": "@uni-ku/root",
   "type": "module",
   "version": "0.0.1",
+  "description": "借助 Vite 模拟出虚拟的全局组件，解决 Uniapp 无法使用全局共享组件问题",
+  "author": {
+    "name": "sKy",
+    "email": "319619193@qq.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/uni-ku/root#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uni-ku/root.git"
+  },
+  "bugs": {
+    "url": "https://github.com/uni-ku/root/issues"
+  },
+  "keywords": [
+    "Uniapp",
+    "Vue",
+    "Vite",
+    "Vite-Plugin"
+  ],
   "sideEffects": false,
   "exports": {
     ".": {
@@ -20,21 +40,25 @@
     "build": "unbuild",
     "dev": "unbuild --stub",
     "release": "npm run build && bumpp",
-    "example:dev:h5": "npm -C examples run dev",
-    "example:build:h5": "npm -C examples run build",
-    "example:dev:mp-weixin": "npm -C examples run dev:mp-weixin",
-    "example:build:mp-weixin": "npm -C examples run build:mp-weixin",
+    "example:dev:h5": "npm run build && npm -C examples run dev",
+    "example:build:h5": "npm run build && npm -C examples run build",
+    "example:dev:mp-weixin": "npm run build && npm -C examples run dev:mp-weixin",
+    "example:build:mp-weixin": "npm run build && npm -C examples run build:mp-weixin",
     "prepare": "simple-git-hooks",
     "lint": "eslint . --fix"
   },
+  "peerDependencies": {
+    "@vue/compiler-sfc": ">=3.0.0",
+    "vite": ">=5.0.0"
+  },
   "dependencies": {
-    "@vue/compiler-sfc": "^3.4.31",
     "jsonc-parser": "^3.3.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.22.2",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
+    "@vue/compiler-sfc": "^3.4.31",
     "bumpp": "^9.4.1",
     "commitizen": "^4.3.0",
     "cz-git": "^1.9.1",
@@ -45,6 +69,7 @@
     "unbuild": "^2.0.0",
     "vite": "^5.3.3",
     "vitest": "^2.0.2"
+
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged",
