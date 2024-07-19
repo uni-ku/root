@@ -59,7 +59,7 @@ export function createApp() {
 ```
 ### 🦾 拓展
 
-> 该功能与 VueRouter 中 <RouterView /> 的实现类似
+> 该功能与 VueRouter 中的 RouterView 实现类似
 
 通过标签 `<KuRoot />` 或 `<ku-root />` 实现指定共享组件存放位置
 
