@@ -1,50 +1,50 @@
 import { createFilter } from 'vite'
 
+import type { SFCDescriptor } from 'vue/compiler-sfc'
 import { MagicString } from 'vue/compiler-sfc'
 
 import { parseSFC } from './utils'
 
-export async function transformAppTemplate(code: string) {
-  const sfc = await parseSFC(code)
-  const ms = new MagicString(code)
+function findKuRootNode(sfc: SFCDescriptor) {
+  const appTemplateSource = sfc.template?.content
 
-  let template = ''
+  if (!appTemplateSource)
+    return
 
-  if (sfc.template?.loc.start.offset && sfc.template?.loc.end.offset) {
-    template = sfc.template.content
+  let kuRootTagName = ''
 
-    ms.remove(
-      sfc.template.loc.start.offset - '<template>'.length,
-      sfc.template.loc.end.offset + '</template>'.length,
-    )
+  if (appTemplateSource.includes('<KuRoot')) {
+    kuRootTagName = 'KuRoot'
+  }
+  else if (appTemplateSource.includes('<ku-root')) {
+    kuRootTagName = 'ku-root'
   }
 
-  return {
-    newCode: ms.toString(),
-    template,
-  }
-}
+  const appAst = sfc.template?.ast
 
-export async function transformPageTemplate(code: string, rootTemplate: string) {
-  const sfc = await parseSFC(code)
-  const ms = new MagicString(code)
+  if (!appAst)
+    return
 
-  const templateCode = sfc.template?.loc.source
+  type tagNode = (typeof appAst)['children'][number]
 
-  if (templateCode) {
-    const start = sfc.template?.loc.start.offset
-    const end = sfc.template?.loc.end.offset
+  const findTagNode = (rawNode: any): tagNode | undefined => {
+    for (const node of rawNode.children) {
+      if (node.type !== 1) {
+        continue
+      }
 
-    if (start && end) {
-      ms.overwrite(
-        start,
-        end,
-        templateCode + rootTemplate,
-      )
+      if (node.tag === kuRootTagName) {
+        return node
+      }
+
+      const found = findTagNode(node)
+      if (found) {
+        return found
+      }
     }
   }
 
-  return ms.toString()
+  return findTagNode(appAst)
 }
 
 interface ContextOptions {
@@ -52,22 +52,68 @@ interface ContextOptions {
 }
 
 export function transformCenter(ctx: ContextOptions) {
-  let rootTemplate = ''
+  let _sfc: SFCDescriptor
+  let _ms: MagicString
+  let _appSource: string | undefined
+  let _kuRootNode: ReturnType<typeof findKuRootNode>
+
+  // 清除 AppTemplate
+  const transformAppTemplate = async () => {
+    const appNodeLoc = _sfc.template?.loc
+
+    if (appNodeLoc) {
+      const start = appNodeLoc.start.offset - ('<template>').length
+      const end = appNodeLoc.end.offset + ('</template>').length
+
+      _ms.remove(start, end)
+    }
+
+    return _ms.toString()
+  }
+
+  const transformPageTemplate = async () => {
+    const pageNodeLoc = _sfc.template?.loc
+    const kuRootSource = _kuRootNode?.loc.source
+
+    if (!_appSource || !pageNodeLoc) {
+      return _ms.toString()
+    }
+
+    if (kuRootSource) {
+      const parsePageSource = _appSource.replace(kuRootSource, pageNodeLoc.source)
+
+      const start = pageNodeLoc.start.offset
+      const end = pageNodeLoc.end.offset
+
+      _ms.overwrite(start, end, parsePageSource)
+    }
+    else {
+      _ms.append(pageNodeLoc.source)
+    }
+
+    return _ms.toString()
+  }
 
   return async (code: string, id: string) => {
     const filterAppId = createFilter(['src/App.vue'])
 
     if (filterAppId(id)) {
-      const { newCode, template } = await transformAppTemplate(code)
-      rootTemplate = template
+      _sfc = await parseSFC(code)
+      _ms = new MagicString(code)
 
-      return newCode
+      _appSource = _sfc.template?.content
+      _kuRootNode = findKuRootNode(_sfc)
+
+      return await transformAppTemplate()
     }
 
     const filterPage = createFilter(ctx.pagesJson)
 
     if (filterPage(id)) {
-      return transformPageTemplate(code, rootTemplate)
+      _sfc = await parseSFC(code)
+      _ms = new MagicString(code)
+
+      return transformPageTemplate()
     }
 
     return code
