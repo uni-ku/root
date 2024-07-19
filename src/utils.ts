@@ -3,8 +3,8 @@ import { join } from 'node:path'
 
 import { parse as jsonParse } from 'jsonc-parser'
 
-import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { parse as VueParser } from '@vue/compiler-sfc'
+import type { SFCDescriptor } from 'vue/compiler-sfc'
+import { parse as VueParser } from 'vue/compiler-sfc'
 
 import { normalizePath } from 'vite'
 

@@ -9,5 +9,4 @@ export default defineBuildConfig({
     inlineDependencies: false,
   },
   failOnWarn: false,
-  externals: ['vite', '@vue/compiler-sfc', 'jsonc-parser'],
 })
