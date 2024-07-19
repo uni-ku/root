@@ -57,6 +57,21 @@ export function createApp() {
   <LoginModal />
 </template>
 ```
+### 🦾 拓展
+
+> 该功能与 VueRouter 中 <RouterView /> 的实现类似
+
+通过标签 `<KuRoot />` 或 `<ku-root />` 实现指定共享组件存放位置
+
+```javascript
+// App.vue
+
+<template>
+  <div>当前页面的顶部</div>
+  <KuRoot />
+  <LoginModal />
+</template>
+```
 
 ### ✨ 例子
 
