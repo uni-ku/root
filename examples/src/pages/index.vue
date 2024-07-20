@@ -10,7 +10,7 @@ function handleClick() {
 
 <template>
   <view>
-    Hello UniKuRoot
+    Hello KuRoot
   </view>
   <button @click="handleClick">
     展示Toast

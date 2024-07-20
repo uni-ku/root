@@ -79,17 +79,19 @@ export function transformCenter(ctx: ContextOptions) {
       return _ms.toString()
     }
 
+    let parsePageSource = ''
+
+    const start = pageNodeLoc.start.offset
+    const end = pageNodeLoc.end.offset
+
     if (kuRootSource) {
-      const parsePageSource = _appSource.replace(kuRootSource, pageNodeLoc.source)
-
-      const start = pageNodeLoc.start.offset
-      const end = pageNodeLoc.end.offset
-
-      _ms.overwrite(start, end, parsePageSource)
+      parsePageSource = _appSource.replace(kuRootSource, pageNodeLoc.source)
     }
     else {
-      _ms.append(pageNodeLoc.source)
+      parsePageSource = pageNodeLoc.source + _appSource
     }
+
+    _ms.overwrite(start, end, parsePageSource)
 
     return _ms.toString()
   }

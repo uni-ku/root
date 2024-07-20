@@ -4,7 +4,7 @@ console.log('UniKuRoot1')
 </script>
 
 <template>
-  <div>123</div>
-  <KuRoot />
+  <div>这是顶部</div>
+  <!-- <KuRoot /> -->
   <GlobalToast />
 </template>

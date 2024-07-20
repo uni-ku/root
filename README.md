@@ -89,6 +89,10 @@ export function createApp() {
 - [ ] 补全单元测试
 - [ ] 使 App.vue 与正常 Vue文件一样 被使用
 
+### 💬 社区
+
+- QQ 交流群 ([897784703](https://qm.qq.com/q/hX1smd93MI))
+
 ### 💖 赞助
 
 如果我的工作帮助到了您，可以请我吃包辣条，能够使我能量满满 ⚡
