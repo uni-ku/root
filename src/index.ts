@@ -2,7 +2,8 @@ import process from 'node:process'
 import { resolve } from 'node:path'
 import { promises as fs } from 'node:fs'
 
-import { type Plugin, createFilter } from 'vite'
+import type { Plugin } from 'vite'
+import { createFilter } from 'vite'
 import { MagicString } from 'vue/compiler-sfc'
 
 import { findNode, loadPagesJson, parseSFC } from './utils'

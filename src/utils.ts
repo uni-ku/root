@@ -51,7 +51,19 @@ export function toPascalCase(str: string) {
     .replace(/(^\w|-+\w)/g, match => match.toUpperCase().replace(/-/g, ''))
 }
 
-export function findNode(sfc: SFCDescriptor, rawTagName: string) {
+interface TagNode {
+  loc: {
+    source: string
+    start: {
+      offset: number
+    }
+    end: {
+      offset: number
+    }
+  }
+}
+
+export function findNode(sfc: SFCDescriptor, rawTagName: string): TagNode | undefined {
   const templateSource = sfc.template?.content
 
   if (!templateSource)
