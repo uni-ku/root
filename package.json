@@ -59,6 +59,7 @@
     "@antfu/eslint-config": "^2.22.2",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
+    "@types/node": "^20.14.12",
     "bumpp": "^9.4.1",
     "commitizen": "^4.3.0",
     "cz-git": "^1.9.1",

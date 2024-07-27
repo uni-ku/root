@@ -38,3 +38,41 @@ export function loadPagesJson(path: string, rootPath: string) {
       .flat(),
   ]
 }
+
+export function toKebabCase(str: string) {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[_\s]+/g, '-')
+    .toLowerCase()
+}
+
+export function toPascalCase(str: string) {
+  return str
+    .replace(/(^\w|-+\w)/g, match => match.toUpperCase().replace(/-/g, ''))
+}
+
+export function findNode(sfc: SFCDescriptor, rawTagName: string) {
+  const templateSource = sfc.template?.content
+
+  if (!templateSource)
+    return
+
+  let tagName = ''
+
+  if (templateSource.includes(`<${toKebabCase(rawTagName)}`)) {
+    tagName = toKebabCase(rawTagName)
+  }
+  else if (templateSource.includes(`<${toPascalCase(rawTagName)}`)) {
+    tagName = toPascalCase(rawTagName)
+  }
+
+  if (!tagName)
+    return
+
+  const nodeAst = sfc.template?.ast
+
+  if (!nodeAst)
+    return
+
+  return nodeAst.children.find(node => node.type === 1 && node.tag === tagName)
+}

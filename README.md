@@ -6,10 +6,13 @@
 [![NPM downloads](https://img.shields.io/npm/dw/@uni-ku/root?color=92DCD2&labelColor=18181B&label=downloads)](https://www.npmjs.com/package/@uni-ku/root)
 [![LICENSE](https://img.shields.io/github/license/uni-ku/root?style=flat&color=92DCD2&labelColor=18181B&label=license)](https://www.npmjs.com/package/@uni-ku/root)
 
+> [!重要]
+> 从 v0.1.0 起，该插件进行破坏性更新，解决大部分疑难杂症，现在全局共享代码不再放在 App.vue 而是 App.ku.vue
+
 ### 📦 安装
 
 ```bash
-pnpm add -D @uni-ku/root
+pnpm add -D @uni-ku/root@latest
 ```
 
 ### 🚀 使用
@@ -50,29 +53,28 @@ export function createApp() {
 }
 ```
 
-3. 添加全局所需组件或代码
-
-> 注意：组件或变量都需要在**全局中共享**，否则无法正常渲染与使用
+3. 根目录下创建 `App.ku.vue` 并添加全局所需组件或代码
 
 ```javascript
-// App.vue
+// App.ku.vue
 
 <template>
   <LoginModal />
 </template>
 ```
+
 ### 🦾 拓展
 
 > 该功能与 VueRouter 中的 RouterView 实现类似
 
-通过标签 `<KuRoot />` 或 `<ku-root />` 实现指定共享组件存放位置
+通过标签 `<KuRootView />` 或 `<ku-root-view />` 实现指定共享组件存放位置
 
 ```javascript
-// App.vue
+// App.ku.vue
 
 <template>
   <div>当前页面的顶部</div>
-  <KuRoot />
+  <KuRootView />
   <LoginModal />
 </template>
 ```
@@ -85,9 +87,10 @@ export function createApp() {
 
 ### 📝 待办
 
-- [ ] 热更新
+- [x] 支持热更新
+- [x] 支持VueSFC
+- [x] 支持小程序PageMeta
 - [ ] 补全单元测试
-- [ ] 使 App.vue 与正常 Vue文件一样 被使用
 
 ### 💬 社区
 
