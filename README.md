@@ -55,19 +55,9 @@ export function createApp() {
 
 3. 根目录下创建 `App.ku.vue` 并添加全局所需组件或代码
 
-```javascript
-// App.ku.vue
-
-<template>
-  <LoginModal />
-</template>
-```
-
-### 🦾 拓展
+通过标签 `<KuRootView />` 或 `<ku-root-view />` 实现指定共享组件存放位置
 
 > 该功能与 VueRouter 中的 RouterView 实现类似
-
-通过标签 `<KuRootView />` 或 `<ku-root-view />` 实现指定共享组件存放位置
 
 ```javascript
 // App.ku.vue
