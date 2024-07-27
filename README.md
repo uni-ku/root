@@ -6,8 +6,8 @@
 [![NPM downloads](https://img.shields.io/npm/dw/@uni-ku/root?color=92DCD2&labelColor=18181B&label=downloads)](https://www.npmjs.com/package/@uni-ku/root)
 [![LICENSE](https://img.shields.io/github/license/uni-ku/root?style=flat&color=92DCD2&labelColor=18181B&label=license)](https://www.npmjs.com/package/@uni-ku/root)
 
-> [!重要]
-> 从 v0.1.0 起，该插件进行破坏性更新，解决大部分疑难杂症，现在全局共享代码不再放在 App.vue 而是 App.ku.vue
+> [!IMPORTANT]
+> 从 v0.1.0 起，该插件进行破坏性更新，现在全局共享代码不再放在 `App.vue` 而是 `App.ku.vue`
 
 ### 📦 安装
 
@@ -19,7 +19,7 @@ pnpm add -D @uni-ku/root@latest
 
 1. 引入 `@uni-ku/root`
 
-```javascript
+```js
 // vite.config.*
 
 import { defineConfig } from 'vite'
@@ -32,40 +32,27 @@ export default defineConfig({
   ]
 })
 ```
+2. 根目录下创建 `App.ku.vue` 并添加全局所需组件或代码
 
-2. 注册全局组件
+通过标签 `<KuRootView />` 或 `<ku-root-view />` 实现指定共享组件存放位置，该功能与 VueRouter 中的 RouterView 实现类似
 
-> 建议配合 `@uni-helper/vite-plugin-uni-components` 使用，可以省略以下全局注册组件
+> 从 v0.1.0 起，现已完全支持 VueSFC
 
-```javascript
-// main.*
+```vue
+<!-- App.ku.vue -->
 
-import LoginModal from '@/components/LoginModal'
+<script setup lang="ts">
+import { ref } from 'vue'
+import GlobalToast from './components/GlobalToast.vue'
 
-export function createApp() {
-  const app = createSSRApp(App)
-
-  app.component('LoginModal', LoginModal)
-
-  return {
-    app
-  }
-}
-```
-
-3. 根目录下创建 `App.ku.vue` 并添加全局所需组件或代码
-
-通过标签 `<KuRootView />` 或 `<ku-root-view />` 实现指定共享组件存放位置
-
-> 该功能与 VueRouter 中的 RouterView 实现类似
-
-```javascript
-// App.ku.vue
+const helloVueRef = ref('test')
+</script>
 
 <template>
-  <div>当前页面的顶部</div>
+  <div>Hello AppKuVue</div>
   <KuRootView />
-  <LoginModal />
+  <div>{{ helloVueRef }}</div>
+  <GlobalToast />
 </template>
 ```
 
