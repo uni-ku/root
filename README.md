@@ -24,11 +24,13 @@ pnpm add -D @uni-ku/root@latest
 
 import { defineConfig } from 'vite'
 import UniKuRoot from '@uni-ku/root'
+import Uni from '@dcloudio/vite-plugin-uni'
 
 export default defineConfig({
   plugins: [
     // 若存在改变 pages.json 的插件，请将 UniKuRoot 放置其后
-    UniKuRoot()
+    UniKuRoot(),
+    Uni()
   ]
 })
 ```
@@ -53,6 +55,24 @@ const helloVueRef = ref('test')
   <KuRootView />
   <div>{{ helloVueRef }}</div>
   <GlobalToast />
+</template>
+```
+
+3. 视图内部触发全局 Toast 组件
+
+```vue
+<!-- src/pages/index.vue -->
+
+<script setup lang="ts">
+import { useToast } from '@/composables/useToast'
+
+const { showToast } = useToast()
+</script>
+
+<template>
+  <button @click="showToast">
+    展示全局Toast
+  </button>
 </template>
 ```
 

@@ -39,11 +39,11 @@
   "scripts": {
     "build": "unbuild",
     "dev": "unbuild --stub",
-    "release": "npm run build && bumpp",
-    "example:dev:h5": "npm run build && npm -C examples run dev",
-    "example:build:h5": "npm run build && npm -C examples run build",
-    "example:dev:mp-weixin": "npm run build && npm -C examples run dev:mp-weixin",
-    "example:build:mp-weixin": "npm run build && npm -C examples run build:mp-weixin",
+    "release": "pnpm build && bumpp",
+    "example:dev:h5": "pnpm build && pnpm -C examples run dev",
+    "example:build:h5": "pnpm build && pnpm -C examples run build",
+    "example:dev:mp-weixin": "pnpm build && pnpm -C examples run dev:mp-weixin",
+    "example:build:mp-weixin": "pnpm build && pnpm -C examples run build:mp-weixin",
     "prepare": "simple-git-hooks",
     "lint": "eslint . --fix"
   },
