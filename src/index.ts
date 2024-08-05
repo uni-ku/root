@@ -18,11 +18,11 @@ export default function UniKuRoot(): Plugin {
     name: 'vite-plugin-uni-root',
     enforce: 'pre',
     async transform(code, id) {
-      const filterMain = createFilter(['src/main.(ts|js)', 'main.(ts|js)'])
+      const filterMain = createFilter(`${rootPath}/main.(ts|js)`)
       if (filterMain(id))
         return registerKuApp(code)
 
-      const filterKuRoot = createFilter(['src/App.ku.vue'])
+      const filterKuRoot = createFilter(`${rootPath}/App.ku.vue`)
       if (filterKuRoot(id))
         return await rebuildKuApp(appKuPath)
 

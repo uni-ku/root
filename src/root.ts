@@ -19,10 +19,10 @@ export async function registerKuApp(code: string) {
 }
 
 export async function rebuildKuApp(path: string) {
-  const rootTagNameRE = /\b(?:KuRootView|ku-root-view)\b/
+  const rootTagNameRE = /<(KuRootView|ku-root-view)\s*\/>/
 
   const code = await fs.readFile(path, 'utf-8')
-  const ms = new MagicString(code).replace(rootTagNameRE, 'slot')
+  const ms = new MagicString(code).replace(rootTagNameRE, '<slot />')
 
   return ms.toString()
 }
