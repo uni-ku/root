@@ -1,7 +1,7 @@
 {
   "name": "@uni-ku/root",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "借助 Vite 模拟出虚拟的全局组件，解决 Uniapp 无法使用全局共享组件问题",
   "author": {
     "name": "sKy",
