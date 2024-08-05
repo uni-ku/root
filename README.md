@@ -1,5 +1,8 @@
 # Root
 
+![Uniapp Vue3](https://img.shields.io/badge/Uniapp_Vue3_Cli-4FC08D?logo=vue.js&labelColor=18181B)
+![Vite Plugin](https://img.shields.io/badge/Vite_Plugin-646CFF?logo=vite&labelColor=18181B)
+
 借助 Vite 模拟出虚拟的全局组件，解决 uniapp 无根组件导致无法使用全局共享组件问题
 
 [![NPM version](https://img.shields.io/npm/v/@uni-ku/root?color=92DCD2&labelColor=18181B&label=npm)](https://www.npmjs.com/package/@uni-ku/root)
@@ -7,7 +10,7 @@
 [![LICENSE](https://img.shields.io/github/license/uni-ku/root?style=flat&color=92DCD2&labelColor=18181B&label=license)](https://www.npmjs.com/package/@uni-ku/root)
 
 > [!IMPORTANT]
-> 从 v0.1.0 起，该插件已破坏性更新，现在全局共享代码放在 `App.ku.vue` 而不是 `App.ku.vue`
+> 从 v0.1.0 起，该插件已破坏性更新，现在全局共享代码放在 `App.ku.vue` 而不是 `App.vue`
 
 ### 📦 安装
 
@@ -34,16 +37,16 @@ export default defineConfig({
   ]
 })
 ```
-2. 根目录下创建 `App.ku.vue` 并添加全局所需组件或代码
+2. 根目录下创建 `App.ku.vue`
 
 > 从 v0.1.0 起，现已完全支持 VueSFC
 
-通过标签 `<KuRootView />` 或 `<ku-root-view />` 实现指定共享组件存放位置，该功能与 VueRouter 中的 RouterView 实现类似
+通过标签 `<KuRootView />` 或 `<ku-root-view />` 指定视图存放位置，该功能与 VueRouter 中的 RouterView 功能类似
 
 标签 `<KuRootView />` 可以放置 template 内任意位置，但仅可有一个，示例如下
 
 ```vue
-<!-- App.ku.vue -->
+<!-- src/App.ku.vue -->
 
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -142,7 +145,7 @@ export function useToast() {
 3. 挂载至 App.ku.vue
 
 ```vue
-<!-- App.ku.vue -->
+<!-- src/App.ku.vue -->
 
 <script setup lang="ts">
 import GlobalToast from '@/components/GlobalToast.vue'
@@ -187,7 +190,7 @@ const { showToast } = useToast()
 1. 以 Wot 组件库中 WdConfigProvider 为例子，[了解更多Wot点这里](https://github.com/Moonofweisheng/wot-design-uni)
 
 ```vue
-<!-- App.ku.vue -->
+<!-- src/App.ku.vue -->
 
 <script setup lang="ts">
 import { useTheme } from './composables/useTheme'
