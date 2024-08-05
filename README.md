@@ -44,7 +44,8 @@ export default defineConfig({
 > 该功能与 VueRouter 中的 RouterView 功能类似，从 v0.1.0 起，现已完全支持 VueSFC
 
 ```vue
-<!-- src/App.ku.vue -->
+<!-- CLI创建的项目：src/App.ku.vue -->
+<!-- Hbx创建的项目：App.ku.vue -->
 
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -57,7 +58,7 @@ const helloKuRoot = ref('Hello AppKuVue')
   <!-- 顶级 KuRootView -->
   <KuRootView />
 
-  <!-- 或内部 KuRootView，无论放置哪一个层级都被允许 -->
+  <!-- 或内部 KuRootView，无论放置哪一个层级都被允许，但仅可有一个！ -->
   <div>
     <KuRootView />
   </div>
