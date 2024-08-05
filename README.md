@@ -37,13 +37,11 @@ export default defineConfig({
   ]
 })
 ```
-2. 根目录下创建 `App.ku.vue`
+2. 创建 `App.ku.vue`
 
-> 从 v0.1.0 起，现已完全支持 VueSFC
+通过标签 `<KuRootView />` 或 `<ku-root-view />` 指定视图存放位置，且可以放置到 `template` 内任意位置，但仅可有一个
 
-通过标签 `<KuRootView />` 或 `<ku-root-view />` 指定视图存放位置，该功能与 VueRouter 中的 RouterView 功能类似
-
-标签 `<KuRootView />` 可以放置 template 内任意位置，但仅可有一个，示例如下
+> 该功能与 VueRouter 中的 RouterView 功能类似，从 v0.1.0 起，现已完全支持 VueSFC
 
 ```vue
 <!-- src/App.ku.vue -->
@@ -71,9 +69,11 @@ const helloKuRoot = ref('Hello AppKuVue')
 <details>
 
 <summary>
-  <h4>1. 📌 全局共享组件例子：Toast</h4>
-  <p>不仅是 Toast 组件，还可以是 Message、LoginPopup 等等</p>
+  <strong>1. (点击展开) 全局共享组件例子：Toast</strong>
 </summary>
+<br />
+
+> 不仅是 Toast 组件，还可以是 Message、LoginPopup 等等
 
 - 🔗 [查看以下完整项目例子](https://github.com/uni-ku/root/tree/main/examples)
 
@@ -183,9 +183,11 @@ const { showToast } = useToast()
 <details>
 
 <summary>
-  <h4>2. 📌 全局共享布局例子：ConfigProvider</h4>
-  <p>不仅是 全局共享布局例子：ConfigProvider 组件，还可以是 Layout 等等</p>
+  <strong>2. (点击展开) 全局共享布局例子：ConfigProvider</strong>
 </summary>
+<br />
+
+> 不仅仅只有ConfigProvider，还能是Layout、NavBar、TabBar等等！
 
 1. 以 Wot 组件库中 WdConfigProvider 为例子，[了解更多Wot点这里](https://github.com/Moonofweisheng/wot-design-uni)
 
