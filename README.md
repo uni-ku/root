@@ -291,7 +291,7 @@ const { theme, toggleTheme } = useTheme()
 
 #### 微信赞赏
 
-<img src="https://cdn.jsdelivr.net/gh/Skiyee/sponsors@main/assets/wechat-pay.png" alt="wechat-pay" width="260" />
+<img src="https://cdn.jsdelivr.net/gh/Skiyee/sponsors@main/assets/wechat-pay.png" alt="wechat-pay" width="320" />
 
 #### 赞赏榜单
 
