@@ -1,6 +1,6 @@
 # Root
 
-![Uniapp Vue3](https://img.shields.io/badge/Uniapp_Vue3_Cli-4FC08D?logo=vue.js&labelColor=18181B)
+![Uniapp Vue3](https://img.shields.io/badge/Uniapp_Vue3-4FC08D?logo=vue.js&labelColor=18181B)
 ![Vite Plugin](https://img.shields.io/badge/Vite_Plugin-646CFF?logo=vite&labelColor=18181B)
 
 借助 Vite 模拟出虚拟的全局组件，解决 uniapp 无根组件导致无法使用全局共享组件问题
@@ -10,7 +10,12 @@
 [![LICENSE](https://img.shields.io/github/license/uni-ku/root?style=flat&color=92DCD2&labelColor=18181B&label=license)](https://www.npmjs.com/package/@uni-ku/root)
 
 > [!IMPORTANT]
-> 从 v0.1.0 起，该插件已破坏性更新，现在全局共享代码放在 `App.ku.vue` 而不是 `App.vue`
+> 从 v0.2.0 开始, 已支持 HBuilderX 创建的 Vue3 项目
+
+### 🎏 支持
+
+- Vue3
+- CLI 或 HBuilderX 创建的项目
 
 ### 📦 安装
 
@@ -21,6 +26,9 @@ pnpm add -D @uni-ku/root@latest
 ### 🚀 使用
 
 1. 引入 `@uni-ku/root`
+
+- CLI: `直接编写` 根目录下的 vite.config.*
+- HBuilderX: 需要根据你所使用语言, 在根目录下 `创建`  vite.config.*
 
 ```js
 // vite.config.*
@@ -41,11 +49,13 @@ export default defineConfig({
 
 通过标签 `<KuRootView />` 或 `<ku-root-view />` 指定视图存放位置，且可以放置到 `template` 内任意位置，但仅可有一个
 
-> 该功能与 VueRouter 中的 RouterView 功能类似，从 v0.1.0 起，现已完全支持 VueSFC
+> 该功能与 VueRouter 中的 RouterView 功能类似
+
+- CLI: 需要在 `src目录` 下创建下 App.ku.vue
+- HBuilderX: 直接在 `根目录` 下创建 App.ku.vue
 
 ```vue
-<!-- CLI创建的项目：src/App.ku.vue -->
-<!-- Hbx创建的项目：App.ku.vue -->
+<!-- src/App.ku.vue | App.ku.vue -->
 
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -66,6 +76,8 @@ const helloKuRoot = ref('Hello AppKuVue')
 ```
 
 ### ✨ 例子
+
+> 以下例子均以CLI创建项目为例, HBuilderX 项目与以上设置同理, 只要注意是否需要包含 src目录 即可
 
 <details>
 
@@ -271,11 +283,17 @@ const { theme, toggleTheme } = useTheme()
 
 - QQ 交流群 ([897784703](https://qm.qq.com/q/hX1smd93MI))
 
-### 💖 赞助
+### 💖 赞赏
 
 如果我的工作帮助到了您，可以请我吃包辣条，能够使我能量满满 ⚡
 
-- [点这里请吃辣条](https://github.com/Skiyee/sponsors) 👈
+> 请留下您的Github用户名，感谢 ❤
+
+#### 微信赞赏
+
+<img src="https://cdn.jsdelivr.net/gh/Skiyee/sponsors@main/assets/wechat-pay.png" alt="wechat-pay" width="260" />
+
+#### 赞赏榜单
 
 <p align="center">
   <a href="https://github.com/Skiyee/sponsors">
