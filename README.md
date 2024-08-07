@@ -3,24 +3,25 @@
 ![Uniapp Vue3](https://img.shields.io/badge/Uniapp_Vue3-4FC08D?logo=vue.js&labelColor=18181B)
 ![Vite Plugin](https://img.shields.io/badge/Vite_Plugin-646CFF?logo=vite&labelColor=18181B)
 
-借助 Vite 模拟出虚拟的全局组件，解决 uniapp 无根组件导致无法使用全局共享组件问题
+借助 Vite 模拟出虚拟根组件(支持SFC的App.vue)，解决 uniapp 无法使用公共组件问题
 
 [![NPM version](https://img.shields.io/npm/v/@uni-ku/root?color=92DCD2&labelColor=18181B&label=npm)](https://www.npmjs.com/package/@uni-ku/root)
 [![NPM downloads](https://img.shields.io/npm/dw/@uni-ku/root?color=92DCD2&labelColor=18181B&label=downloads)](https://www.npmjs.com/package/@uni-ku/root)
 [![LICENSE](https://img.shields.io/github/license/uni-ku/root?style=flat&color=92DCD2&labelColor=18181B&label=license)](https://www.npmjs.com/package/@uni-ku/root)
 
-> [!IMPORTANT]
+> [!TIP]
 > 从 v0.2.0 开始, 已支持 HBuilderX 创建的 Vue3 项目
 
 ### 🎏 支持
 
 - Vue3
+- Uniapp
 - CLI 或 HBuilderX 创建的项目
 
 ### 📦 安装
 
 ```bash
-pnpm add -D @uni-ku/root@latest
+pnpm add -D @uni-ku/root
 ```
 
 ### 🚀 使用
@@ -283,9 +284,15 @@ const { theme, toggleTheme } = useTheme()
 
 - QQ 交流群 ([897784703](https://qm.qq.com/q/hX1smd93MI))
 
+### 🏝 周边
+
+|项目|描述|
+|---|---|
+|[Wot Design Uni](https://github.com/Moonofweisheng/wot-design-uni/)|一个基于Vue3+TS开发的uni-app组件库，提供70+高质量组件|
+
 ### 💖 赞赏
 
-如果我的工作帮助到了您，可以请我吃包辣条，能够使我能量满满 ⚡
+如果我的工作帮助到了您，可以请我吃辣条，使我能量满满 ⚡
 
 > 请留下您的Github用户名，感谢 ❤
 
