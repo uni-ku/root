@@ -14,8 +14,8 @@
 
 ### 🎏 支持
 
-- Vue3
 - Uniapp
+- Vue3
 - CLI 或 HBuilderX 创建的项目
 
 ### 📦 安装
@@ -237,7 +237,7 @@ import { ref } from 'vue'
 const theme = ref<'light' | 'dark'>(false)
 const themeVars = ref<ConfigProviderThemeVars>()
 
-export function useToast(vars?: ConfigProviderThemeVars) {
+export function useTheme(vars?: ConfigProviderThemeVars) {
   vars && (themeVars.value = vars)
 
   function toggleTheme(mode?: 'light' | 'dark') {
