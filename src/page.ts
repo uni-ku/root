@@ -26,5 +26,5 @@ export async function transformPage(code: string) {
     ms.appendRight(pageTempEnd, `</uni-ku-root>\n`)
   }
 
-  return ms.toString()
+  return ms
 }

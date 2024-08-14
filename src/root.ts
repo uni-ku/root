@@ -9,13 +9,12 @@ export async function registerKuApp(code: string) {
 
   const vueUseComponentCode = `app.component("uni-ku-root", KuAppRoot);`
 
-  ms.prepend(`${importCode}\n`)
-  ms.replace(
+  ms.prepend(`${importCode}\n`).replace(
     /(createApp[\s\S]*?)(return\s\{\s*app)/,
     `$1${vueUseComponentCode}\n$2`,
   )
 
-  return ms.toString()
+  return ms
 }
 
 export async function rebuildKuApp(path: string) {
@@ -24,5 +23,5 @@ export async function rebuildKuApp(path: string) {
   const code = await fs.readFile(path, 'utf-8')
   const ms = new MagicString(code).replace(rootTagNameRE, '<slot />')
 
-  return ms.toString()
+  return ms
 }

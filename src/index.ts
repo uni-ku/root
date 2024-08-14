@@ -4,6 +4,7 @@ import { resolve } from 'node:path'
 import type { Plugin } from 'vite'
 import { createFilter } from 'vite'
 
+import type { MagicString } from 'vue/compiler-sfc'
 import chokidar from 'chokidar'
 
 import { loadPagesJson } from './utils'
@@ -28,17 +29,26 @@ export default function UniKuRoot(): Plugin {
       })
     },
     async transform(code, id) {
+      let ms: MagicString | null = null
+
       const filterMain = createFilter(`${rootPath}/main.(ts|js)`)
       if (filterMain(id))
-        return registerKuApp(code)
+        ms = await registerKuApp(code)
 
       const filterKuRoot = createFilter(`${rootPath}/App.ku.vue`)
       if (filterKuRoot(id))
-        return await rebuildKuApp(appKuPath)
+        ms = await rebuildKuApp(appKuPath)
 
       const filterPage = createFilter(pagesJson)
       if (filterPage(id)) {
-        return await transformPage(code)
+        ms = await transformPage(code)
+      }
+
+      if (ms) {
+        return {
+          code: ms.toString(),
+          map: ms.generateMap({ hires: true }),
+        }
       }
     },
   }
