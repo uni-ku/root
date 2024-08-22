@@ -148,7 +148,32 @@ export default defineConfig({
 })
 ```
 
-2. 通过特有内置方法 `getCurrentPages()` 获取暴露的数据
+2. 暴露出 App.ku 里所要被使用的变量或方法
+
+```vue
+<!-- src/App.ku.vue | App.ku.vue -->
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const helloKuRoot = ref('Hello AppKuVue')
+
+const exposeRef = ref('this is form app.Ku.vue')
+
+defineExpose({
+  exposeRef,
+})
+</script>
+
+<template>
+  <div>
+    <div>{{ helloKuRoot }}</div>
+    <KuRootView />
+  </div>
+</template>
+```
+
+3. 通过特有内置方法 `getCurrentPages()` 获取暴露的数据
 
 ```vue
 <!-- src/pages/*.vue -->
