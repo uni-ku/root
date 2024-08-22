@@ -5,9 +5,9 @@ import { MagicString } from 'vue/compiler-sfc'
 export async function registerKuApp(code: string) {
   const ms = new MagicString(code)
 
-  const importCode = `import KuAppRoot from "./App.ku.vue";`
+  const importCode = `import UniKuAppRoot from "./App.ku.vue";`
 
-  const vueUseComponentCode = `app.component("uni-ku-root", KuAppRoot);`
+  const vueUseComponentCode = `app.component("uni-ku-app-root", UniKuAppRoot);`
 
   ms.prepend(`${importCode}\n`).replace(
     /(createApp[\s\S]*?)(return\s\{\s*app)/,

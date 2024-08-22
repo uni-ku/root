@@ -2,7 +2,7 @@ import { MagicString } from 'vue/compiler-sfc'
 
 import { findNode, parseSFC } from './utils'
 
-export async function transformPage(code: string) {
+export async function transformPage(code: string, enabledGlobalRef = false) {
   const sfc = await parseSFC(code)
   const ms = new MagicString(code)
 
@@ -21,9 +21,17 @@ export async function transformPage(code: string) {
     ms.remove(metaTempStart, metaTempEnd)
   }
 
+  const pageTempAttrs = sfc.template?.attrs
+
+  let pageRootRefSource = enabledGlobalRef ? 'ref="uniKuRoot"' : ''
+
+  if (pageTempAttrs && pageTempAttrs.root) {
+    pageRootRefSource = `ref="${pageTempAttrs.root as string}"`
+  }
+
   if (pageTempStart && pageTempEnd) {
-    ms.appendLeft(pageTempStart, `\n${pageMetaSource}\n<uni-ku-root>`)
-    ms.appendRight(pageTempEnd, `</uni-ku-root>\n`)
+    ms.appendLeft(pageTempStart, `\n${pageMetaSource}\n<uni-ku-app-root ${pageRootRefSource}>`)
+    ms.appendRight(pageTempEnd, `</uni-ku-app-root>\n`)
   }
 
   return ms

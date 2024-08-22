@@ -14,7 +14,7 @@ export async function parseSFC(code: string): Promise<SFCDescriptor> {
   }
   catch {
     throw new Error(
-      '[vite-plugin-uni-root] Vue3\'s "@vue/compiler-sfc" is required.',
+      '[@uni-ku/root] Vue\'s version must be 3.2.13 or higher.',
     )
   }
 }

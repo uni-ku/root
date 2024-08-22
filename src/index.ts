@@ -11,7 +11,11 @@ import { loadPagesJson } from './utils'
 import { rebuildKuApp, registerKuApp } from './root'
 import { transformPage } from './page'
 
-export default function UniKuRoot(): Plugin {
+interface UniKuRootOptions {
+  enabledGlobalRef?: boolean
+}
+
+export default function UniKuRoot(options: UniKuRootOptions = {}): Plugin {
   const rootPath = process.env.UNI_INPUT_DIR || (`${process.env.INIT_CWD}\\src`)
   const appKuPath = resolve(rootPath, 'App.ku.vue')
   const pagesPath = resolve(rootPath, 'pages.json')
@@ -41,7 +45,7 @@ export default function UniKuRoot(): Plugin {
 
       const filterPage = createFilter(pagesJson)
       if (filterPage(id)) {
-        ms = await transformPage(code)
+        ms = await transformPage(code, options.enabledGlobalRef)
       }
 
       if (ms) {
