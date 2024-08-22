@@ -2,7 +2,13 @@
 import { ref } from 'vue'
 import GlobalToast from './components/GlobalToast.vue'
 
-const HelloVueRef = ref('test')
+const HelloVueRef = ref('Hello app.Ku.vue')
+
+const exposeRef = ref('this is form app.Ku.vue')
+
+defineExpose({
+  exposeRef,
+})
 </script>
 
 <template>

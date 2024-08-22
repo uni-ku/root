@@ -76,6 +76,101 @@ const helloKuRoot = ref('Hello AppKuVue')
 </template>
 ```
 
+3. 如何使用 `App.ku.vue` 实例 ？
+
+有两种方法，局部或全部启用，请看一下示例
+
+- 局部启用
+
+1. 暴露出 App.ku 里所要被使用的变量或方法
+
+```vue
+<!-- src/App.ku.vue | App.ku.vue -->
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const helloKuRoot = ref('Hello AppKuVue')
+
+const exposeRef = ref('this is form app.Ku.vue')
+
+defineExpose({
+  exposeRef,
+})
+</script>
+
+<template>
+  <div>
+    <div>{{ helloKuRoot }}</div>
+    <KuRootView />
+  </div>
+</template>
+```
+
+2. 在 template 内编写 root="xxx"，并通过 const xxx = ref() 获取模板引用
+
+> xxx 代表自定义命名，可以随意命名
+
+```vue
+<!-- src/pages/*.vue -->
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const uniKuRoot = ref()
+</script>
+
+<template root="uniKuRoot">
+  <view>
+    Hello UniKuRoot
+  </view>
+</template>
+```
+
+- 全局启用
+
+1. 通过配置 `enabledGlobalRef` 开启全局自动注入 App.ku 实例
+
+```js
+// vite.config.*
+
+import { defineConfig } from 'vite'
+import UniKuRoot from '@uni-ku/root'
+import Uni from '@dcloudio/vite-plugin-uni'
+
+export default defineConfig({
+  plugins: [
+    UniKuRoot({
+      enabledGlobalRef: true
+    }),
+    Uni()
+  ]
+})
+```
+
+2. 通过特有内置方法 `getCurrentPages()` 获取暴露的数据
+
+```vue
+<!-- src/pages/*.vue -->
+
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+
+const pagesStack = getCurrentPages()
+const uniKuRoot = ref()
+
+onMounted(() => {
+  uniKuRoot.value = pagesStack[pagesStack.length - 1].$vm.$refs.uniKuRoot
+})
+</script>
+
+<template>
+  <view>
+    Hello UniKuRoot
+  </view>
+</template>
+```
+
 ### ✨ 例子
 
 > 以下例子均以CLI创建项目为例, HBuilderX 项目与以上设置同理, 只要注意是否需要包含 src目录 即可
