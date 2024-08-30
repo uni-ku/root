@@ -33,7 +33,7 @@ jobs:
           set -e
           current_tag="${{ steps.get_tags.outputs.current_tag }}"
           previous_tag="${{ steps.get_tags.outputs.previous_tag }}"
-          commit_messages=$(git log --pretty=format:"%s %h" "$previous_tag".."$current_tag" | grep -E 'feat|fix|docs|perf')
+          commit_messages=$(git log --pretty=format:"%s - by @%cn (%h)" "$previous_tag".."$current_tag" | grep -E 'feat|fix|docs|perf')
           feat_messages=$(echo "$commit_messages" | grep 'feat' || true)
           fix_messages=$(echo "$commit_messages" | grep 'fix' || true)
           docs_messages=$(echo "$commit_messages" | grep 'docs' || true)
