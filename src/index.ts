@@ -22,11 +22,13 @@ export default function UniKuRoot(options: UniKuRootOptions = {}): Plugin {
 
   let pagesJson = loadPagesJson(pagesPath, rootPath)
 
+  let watcher: chokidar.FSWatcher | null = null
+
   return {
     name: 'vite-plugin-uni-root',
     enforce: 'pre',
     buildStart() {
-      chokidar.watch(pagesPath).on('all', (event) => {
+      watcher = chokidar.watch(pagesPath).on('all', (event) => {
         if (['add', 'change'].includes(event)) {
           pagesJson = loadPagesJson(pagesPath, rootPath)
         }
@@ -53,6 +55,11 @@ export default function UniKuRoot(options: UniKuRootOptions = {}): Plugin {
           code: ms.toString(),
           map: ms.generateMap({ hires: true }),
         }
+      }
+    },
+    buildEnd() {
+      if (watcher) {
+        watcher.close()
       }
     },
   }
