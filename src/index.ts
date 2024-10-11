@@ -12,12 +12,23 @@ import { rebuildKuApp, registerKuApp } from './root'
 import { transformPage } from './page'
 
 interface UniKuRootOptions {
+  /**
+   * 是否启用全局ref
+   * @default false
+   */
   enabledGlobalRef?: boolean
+  /**
+   * 根文件名
+   * @default 'App.ku'
+   */
+  rootFileName?: string
 }
 
-export default function UniKuRoot(options: UniKuRootOptions = {}): Plugin {
+export default function UniKuRoot(options: UniKuRootOptions = {
+  rootFileName: 'App.ku',
+}): Plugin {
   const rootPath = process.env.UNI_INPUT_DIR || (`${process.env.INIT_CWD}\\src`)
-  const appKuPath = resolve(rootPath, 'App.ku.vue')
+  const appKuPath = resolve(rootPath, `${options.rootFileName}.vue`)
   const pagesPath = resolve(rootPath, 'pages.json')
 
   let pagesJson = loadPagesJson(pagesPath, rootPath)
@@ -39,9 +50,9 @@ export default function UniKuRoot(options: UniKuRootOptions = {}): Plugin {
 
       const filterMain = createFilter(`${rootPath}/main.(ts|js)`)
       if (filterMain(id))
-        ms = await registerKuApp(code)
+        ms = await registerKuApp(code, options.rootFileName)
 
-      const filterKuRoot = createFilter(`${rootPath}/App.ku.vue`)
+      const filterKuRoot = createFilter(`${rootPath}/${options.rootFileName}.vue`)
       if (filterKuRoot(id))
         ms = await rebuildKuApp(appKuPath)
 

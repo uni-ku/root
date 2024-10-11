@@ -14,9 +14,9 @@
 
 ### 🎏 支持
 
-- Uniapp
-- Vue3
-- CLI 或 HBuilderX 创建的项目
+- Uniapp - CLI 或 HBuilderX 创建的 Vue3 项目
+- 自定义虚拟根组件文件命名
+- 更高灵活度的获取虚拟根组件实例
 
 ### 📦 安装
 
@@ -46,14 +46,14 @@ export default defineConfig({
   ]
 })
 ```
-2. 创建 `App.ku.vue`
+2. 创建 `App.ku.vue`(可自定义此根组件名称，请下拉至功能参考设置)
 
 通过标签 `<KuRootView />` 或 `<ku-root-view />` 指定视图存放位置，且可以放置到 `template` 内任意位置，但仅可有一个
 
-> 该功能与 VueRouter 中的 RouterView 功能类似
+> 该功能与 VueRouter 中的 RouterView 功能类似，但请注意，由于Uniapp-Vue的局限性，该功能并不完全等同于原版 RouterView
 
-- CLI: 需要在 `src目录` 下创建下 App.ku.vue
-- HBuilderX: 直接在 `根目录` 下创建 App.ku.vue
+- CLI: 需要在 `src目录` 下创建下 App.ku.vue (或自定义名称)
+- HBuilderX: 直接在 `根目录` 下创建 App.ku.vue (或自定义名称)
 
 ```vue
 <!-- src/App.ku.vue | App.ku.vue -->
@@ -76,11 +76,37 @@ const helloKuRoot = ref('Hello AppKuVue')
 </template>
 ```
 
-3. 如何使用 `App.ku.vue` 实例 ？
+### 🎉 功能
 
-有两种方法，局部或全部启用，请看一下示例
+#### 功能一：自定义虚拟根组件名称(默认：App.ku.vue)
 
-- 局部启用
+1. 通过设置 vite.config.* 下插件的参数 `rootFileName` 来自定义虚拟根组件名称
+
+```js
+// vite.config.*
+
+import { defineConfig } from 'vite'
+import UniKuRoot from '@uni-ku/root'
+import Uni from '@dcloudio/vite-plugin-uni'
+
+export default defineConfig({
+  plugins: [
+    UniKuRoot({
+      // 默认含后缀 .vue，直接设置命名即可
+      rootFileName: 'KuRoot',
+    }),
+    // ...other plugins
+  ]
+})
+```
+
+2. 创建/修改虚拟根组件为 `KuRoot.vue`，即可实现自定义，其余功能不变
+
+#### 功能二：使用虚拟根组件实例(即：App.ku.vue)
+
+> 有两种方法，局部或全部启用，请看一下示例
+
+一、 局部启用
 
 1. 暴露出 App.ku 里所要被使用的变量或方法
 
@@ -127,7 +153,7 @@ const uniKuRoot = ref()
 </template>
 ```
 
-- 全局启用
+二、全局启用
 
 1. 通过配置 `enabledGlobalRef` 开启全局自动注入 App.ku 实例
 
@@ -156,9 +182,9 @@ export default defineConfig({
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const helloKuRoot = ref('Hello AppKuVue')
+const helloKuRoot = ref('Hello UniKuRoot')
 
-const exposeRef = ref('this is form app.Ku.vue')
+const exposeRef = ref('this is from App.ku.vue')
 
 defineExpose({
   exposeRef,

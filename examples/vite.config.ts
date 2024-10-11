@@ -7,7 +7,9 @@ import UniKuRoot from '@uni-ku/root'
 
 export default defineConfig({
   plugins: [
-    UniKuRoot(),
+    UniKuRoot({
+      rootFileName: 'KuRoot',
+    }),
     Uni(),
   ],
   resolve: {

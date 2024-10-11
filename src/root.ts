@@ -2,10 +2,10 @@ import { promises as fs } from 'node:fs'
 
 import { MagicString } from 'vue/compiler-sfc'
 
-export async function registerKuApp(code: string) {
+export async function registerKuApp(code: string, fileName: string = 'App.ku') {
   const ms = new MagicString(code)
 
-  const importCode = `import UniKuAppRoot from "./App.ku.vue";`
+  const importCode = `import UniKuAppRoot from "./${fileName}.vue";`
 
   const vueUseComponentCode = `app.component("uni-ku-app-root", UniKuAppRoot);`
 
