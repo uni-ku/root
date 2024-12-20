@@ -1,12 +1,9 @@
 # Root
 
-![Uniapp Vue3](https://img.shields.io/badge/Uniapp_Vue3-4FC08D?logo=vue.js&labelColor=18181B)
-![Vite Plugin](https://img.shields.io/badge/Vite_Plugin-646CFF?logo=vite&labelColor=18181B)
-
 借助 Vite 模拟出虚拟根组件(支持SFC的App.vue)，解决 uniapp 无法使用公共组件问题
 
 [![NPM version](https://img.shields.io/npm/v/@uni-ku/root?color=92DCD2&labelColor=18181B&label=npm)](https://www.npmjs.com/package/@uni-ku/root)
-[![NPM downloads](https://img.shields.io/npm/dw/@uni-ku/root?color=92DCD2&labelColor=18181B&label=downloads)](https://www.npmjs.com/package/@uni-ku/root)
+[![NPM downloads](https://img.shields.io/npm/dm/@uni-ku/root?color=92DCD2&labelColor=18181B&label=downloads)](https://www.npmjs.com/package/@uni-ku/root)
 [![LICENSE](https://img.shields.io/github/license/uni-ku/root?style=flat&color=92DCD2&labelColor=18181B&label=license)](https://www.npmjs.com/package/@uni-ku/root)
 
 > [!TIP]
@@ -14,7 +11,7 @@
 
 ### 🎏 支持
 
-- Uniapp - CLI 或 HBuilderX 创建的 Vue3 项目
+- Uniapp-CLI 或 HBuilderX 创建的 Vue3 项目
 - 自定义虚拟根组件文件命名
 - 更高灵活度的获取虚拟根组件实例
 
@@ -22,17 +19,23 @@
 
 ```bash
 pnpm add -D @uni-ku/root
+
+yarn add -D @uni-ku/root
+
+npm install -D @uni-ku/root
 ```
 
 ### 🚀 使用
 
-1. 引入 `@uni-ku/root`
+#### 1. 引入 `@uni-ku/root`
 
-- CLI: `直接编写` 根目录下的 vite.config.*
-- HBuilderX: 需要根据你所使用语言, 在根目录下 `创建`  vite.config.*
+> [!Note]
+> **CLI**：`直接编写` 根目录下的 vite.config.(js|ts)
+> 
+> **HBuilderX**：在根目录下 `创建`  vite.config.(js|ts) 并写入
 
-```js
-// vite.config.*
+```ts
+// vite.config.(js|ts)
 
 import { defineConfig } from 'vite'
 import UniKuRoot from '@uni-ku/root'
@@ -46,16 +49,17 @@ export default defineConfig({
   ]
 })
 ```
-2. 创建 `App.ku.vue`(可自定义此根组件名称，请下拉至功能参考设置)
 
-通过标签 `<KuRootView />` 或 `<ku-root-view />` 指定视图存放位置，且可以放置到 `template` 内任意位置，但仅可有一个
+#### 2. 创建 `App.ku.vue`(可自定义此根组件名称，请下拉至功能参考设置)
 
-> 该功能与 VueRouter 中的 RouterView 功能类似，但请注意，由于Uniapp-Vue的局限性，该功能并不完全等同于原版 RouterView
+> [!Note]
+> **CLI**: 需要在 `src目录` 下创建下 App.ku.vue (或自定义名称)
+> 
+> **HBuilderX**: 直接在 `根目录` 下创建 App.ku.vue (或自定义名称)
 
-- CLI: 需要在 `src目录` 下创建下 App.ku.vue (或自定义名称)
-- HBuilderX: 直接在 `根目录` 下创建 App.ku.vue (或自定义名称)
+通过标签 `<KuRootView />` 或 `<ku-root-view />` 指定视图存放位置，并且可以将该标签放置到 `template` 内任意位置，**但仅可有一个**
 
-```vue
+```ts
 <!-- src/App.ku.vue | App.ku.vue -->
 
 <script setup lang="ts">
@@ -76,14 +80,21 @@ const helloKuRoot = ref('Hello AppKuVue')
 </template>
 ```
 
+> [!Important]
+> 该标签与 VueRouter 中的 RouterView 功能类似，但请注意，由于Uniapp-Vue的局限性，该功能并不完全等同于VueRouter的 RouterView
+
 ### 🎉 功能
 
-#### 功能一：自定义虚拟根组件名称(默认：App.ku.vue)
+<details>
 
-1. 通过设置 vite.config.* 下插件的参数 `rootFileName` 来自定义虚拟根组件名称
+<summary>
+  <strong> (点击展开) 功能一：自定义虚拟根组件名称(默认：App.ku.vue)</strong>
+</summary>
 
-```js
-// vite.config.*
+#### 1. 通过设置 vite.config.(js|ts) 下插件的参数 `rootFileName` 来自定义虚拟根组件名称
+
+```ts
+// vite.config.(js|ts)
 
 import { defineConfig } from 'vite'
 import UniKuRoot from '@uni-ku/root'
@@ -102,15 +113,23 @@ export default defineConfig({
 
 2. 创建/修改虚拟根组件为 `KuRoot.vue`，即可实现自定义，其余功能不变
 
-#### 功能二：使用虚拟根组件实例(即：App.ku.vue)
+</details>
 
-> 有两种方法，局部或全部启用，请看一下示例
+<details>
 
-一、 局部启用
+<summary>
+  <strong> (点击展开) 功能二：使用虚拟根组件实例(即：App.ku.vue)</strong>
+</summary>
+<br/>
 
-1. 暴露出 App.ku 里所要被使用的变量或方法
+> [!TIP]
+> 有两种启用方式，局部或全部启用
 
-```vue
+#### 一、 局部启用
+
+#### 1. 暴露出 App.ku.vue 里所要被使用的变量或方法
+
+```ts
 <!-- src/App.ku.vue | App.ku.vue -->
 
 <script setup lang="ts">
@@ -133,11 +152,12 @@ defineExpose({
 </template>
 ```
 
-2. 在 template 内编写 root="xxx"，并通过 const xxx = ref() 获取模板引用
+#### 2. 在 template 内编写 root="uniKuRoot"，并通过 const uniKuRoot = ref() 获取模板引用
 
-> xxx 代表自定义命名，可以随意命名
+> [!TIP]
+> uniKuRoot 是同一个变量，你可以根据你命名相关命名
 
-```vue
+```ts
 <!-- src/pages/*.vue -->
 
 <script setup lang="ts">
@@ -153,12 +173,12 @@ const uniKuRoot = ref()
 </template>
 ```
 
-二、全局启用
+#### 二、全局启用
 
-1. 通过配置 `enabledGlobalRef` 开启全局自动注入 App.ku 实例
+#### 1. 通过配置 `enabledGlobalRef` 开启全局自动注入 App.ku 实例
 
-```js
-// vite.config.*
+```ts
+// vite.config.(js|ts)
 
 import { defineConfig } from 'vite'
 import UniKuRoot from '@uni-ku/root'
@@ -174,9 +194,9 @@ export default defineConfig({
 })
 ```
 
-2. 暴露出 App.ku 里所要被使用的变量或方法
+#### 2. 暴露出 App.ku 里所要被使用的变量或方法
 
-```vue
+```ts
 <!-- src/App.ku.vue | App.ku.vue -->
 
 <script setup lang="ts">
@@ -199,9 +219,9 @@ defineExpose({
 </template>
 ```
 
-3. 通过特有内置方法 `getCurrentPages()` 获取暴露的数据
+#### 3. 通过特有内置方法 `getCurrentPages()` 获取暴露的数据
 
-```vue
+```ts
 <!-- src/pages/*.vue -->
 
 <script setup lang="ts">
@@ -222,14 +242,17 @@ onMounted(() => {
 </template>
 ```
 
+</details>
+
 ### ✨ 例子
 
-> 以下例子均以CLI创建项目为例, HBuilderX 项目与以上设置同理, 只要注意是否需要包含 src目录 即可
+> [!TIP]
+> 以下例子均以 **CLI** 创建项目为例, **HBuilderX** 项目设置同理, 只要注意是否需要包含 **src目录** 即可
 
 <details>
 
 <summary>
-  <strong>1. (点击展开) 全局共享组件例子：Toast</strong>
+  <strong>(点击展开) 示例一：全局共享组件例子：Toast</strong>
 </summary>
 <br />
 
@@ -239,7 +262,7 @@ onMounted(() => {
 
 1. 编写 Toast 组件
 
-```vue
+```ts
 <!-- src/components/GlobalToast.vue -->
 
 <script setup lang="ts">
@@ -304,7 +327,7 @@ export function useToast() {
 
 3. 挂载至 App.ku.vue
 
-```vue
+```ts
 <!-- src/App.ku.vue -->
 
 <script setup lang="ts">
@@ -319,7 +342,7 @@ import GlobalToast from '@/components/GlobalToast.vue'
 
 4. 视图内部触发全局 Toast 组件
 
-```vue
+```ts
 <!-- src/pages/*.vue -->
 
 <script setup lang="ts">
@@ -343,7 +366,7 @@ const { showToast } = useToast()
 <details>
 
 <summary>
-  <strong>2. (点击展开) 全局共享布局例子：ConfigProvider</strong>
+  <strong>(点击展开) 示例二：全局共享布局例子：ConfigProvider</strong>
 </summary>
 <br />
 
@@ -351,7 +374,7 @@ const { showToast } = useToast()
 
 1. 以 Wot 组件库中 WdConfigProvider 为例子，[了解更多Wot点这里](https://github.com/Moonofweisheng/wot-design-uni)
 
-```vue
+```ts
 <!-- src/App.ku.vue -->
 
 <script setup lang="ts">
@@ -400,7 +423,7 @@ export function useTheme(vars?: ConfigProviderThemeVars) {
 
 3. 切换主题模式
 
-```vue
+```ts
 <!-- src/pages/*.vue -->
 
 <script setup lang="ts">
