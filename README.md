@@ -31,7 +31,7 @@ npm install -D @uni-ku/root
 
 > [!Note]
 > **CLI**：`直接编写` 根目录下的 vite.config.(js|ts)
-> 
+>
 > **HBuilderX**：在根目录下 `创建`  vite.config.(js|ts) 并写入
 
 ```ts
@@ -54,7 +54,7 @@ export default defineConfig({
 
 > [!Note]
 > **CLI**: 需要在 `src目录` 下创建下 App.ku.vue (或自定义名称)
-> 
+>
 > **HBuilderX**: 直接在 `根目录` 下创建 App.ku.vue (或自定义名称)
 
 通过标签 `<KuRootView />` 或 `<ku-root-view />` 指定视图存放位置，并且可以将该标签放置到 `template` 内任意位置，**但仅可有一个**
@@ -458,6 +458,7 @@ const { theme, toggleTheme } = useTheme()
 |项目|描述|
 |---|---|
 |[Wot Design Uni](https://github.com/Moonofweisheng/wot-design-uni/)|一个基于Vue3+TS开发的uni-app组件库，提供70+高质量组件|
+|[Create Uni](https://github.com/uni-helper/create-uni)|一个用于快速创建 uni-app 项目的轻量脚手架工具|
 
 ### 💖 赞赏
 
