@@ -6,12 +6,12 @@
 [![NPM downloads](https://img.shields.io/npm/dm/@uni-ku/root?color=92DCD2&labelColor=18181B&label=downloads)](https://www.npmjs.com/package/@uni-ku/root)
 [![LICENSE](https://img.shields.io/github/license/uni-ku/root?style=flat&color=92DCD2&labelColor=18181B&label=license)](https://www.npmjs.com/package/@uni-ku/root)
 
-> [!TIP]
+> [!Tip]
 > 从 v0.2.0 开始, 已支持 HBuilderX 创建的 Vue3 项目
 
 ### 🎏 支持
 
-- Uniapp-CLI 或 HBuilderX 创建的 Vue3 项目
+- Uniapp-(CLI、HBuilderX) 创建的 Vue3 项目
 - 自定义虚拟根组件文件命名
 - 更高灵活度的获取虚拟根组件实例
 
@@ -29,17 +29,12 @@ npm install -D @uni-ku/root
 
 #### 1. 引入 `@uni-ku/root`
 
-> [!Note]
-> **CLI**：`直接编写` 根目录下的 vite.config.(js|ts)
->
-> **HBuilderX**：在根目录下 `创建`  vite.config.(js|ts) 并写入
-
 ```ts
 // vite.config.(js|ts)
 
-import { defineConfig } from 'vite'
-import UniKuRoot from '@uni-ku/root'
 import Uni from '@dcloudio/vite-plugin-uni'
+import UniKuRoot from '@uni-ku/root'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [
@@ -50,16 +45,16 @@ export default defineConfig({
 })
 ```
 
-#### 2. 创建 `App.ku.vue`(可自定义此根组件名称，请下拉至功能参考设置)
-
 > [!Note]
-> **CLI**: 需要在 `src目录` 下创建下 App.ku.vue (或自定义名称)
+> **CLI**：`直接编写` 根目录下的 vite.config.(js|ts)
 >
-> **HBuilderX**: 直接在 `根目录` 下创建 App.ku.vue (或自定义名称)
+> **HBuilderX**：在根目录下 `创建`  vite.config.(js|ts) 并写入
+
+#### 2. 创建 `App.ku.vue`(可自定义此根组件名称，请下拉至功能参考设置)
 
 通过标签 `<KuRootView />` 或 `<ku-root-view />` 指定视图存放位置，并且可以将该标签放置到 `template` 内任意位置，**但仅可有一个**
 
-```ts
+```vue
 <!-- src/App.ku.vue | App.ku.vue -->
 
 <script setup lang="ts">
@@ -80,6 +75,11 @@ const helloKuRoot = ref('Hello AppKuVue')
 </template>
 ```
 
+> [!Note]
+> **CLI**: 需要在 `src目录` 下创建下 App.ku.vue (或自定义名称)
+>
+> **HBuilderX**: 直接在 `根目录` 下创建 App.ku.vue (或自定义名称)
+
 > [!Important]
 > 该标签与 VueRouter 中的 RouterView 功能类似，但请注意，由于Uniapp-Vue的局限性，该功能并不完全等同于VueRouter的 RouterView
 
@@ -96,9 +96,9 @@ const helloKuRoot = ref('Hello AppKuVue')
 ```ts
 // vite.config.(js|ts)
 
-import { defineConfig } from 'vite'
-import UniKuRoot from '@uni-ku/root'
 import Uni from '@dcloudio/vite-plugin-uni'
+import UniKuRoot from '@uni-ku/root'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [
@@ -129,7 +129,7 @@ export default defineConfig({
 
 #### 1. 暴露出 App.ku.vue 里所要被使用的变量或方法
 
-```ts
+```vue
 <!-- src/App.ku.vue | App.ku.vue -->
 
 <script setup lang="ts">
@@ -157,7 +157,7 @@ defineExpose({
 > [!TIP]
 > uniKuRoot 是同一个变量，你可以根据你命名相关命名
 
-```ts
+```vue
 <!-- src/pages/*.vue -->
 
 <script setup lang="ts">
@@ -180,9 +180,9 @@ const uniKuRoot = ref()
 ```ts
 // vite.config.(js|ts)
 
-import { defineConfig } from 'vite'
-import UniKuRoot from '@uni-ku/root'
 import Uni from '@dcloudio/vite-plugin-uni'
+import UniKuRoot from '@uni-ku/root'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [
@@ -196,7 +196,7 @@ export default defineConfig({
 
 #### 2. 暴露出 App.ku 里所要被使用的变量或方法
 
-```ts
+```vue
 <!-- src/App.ku.vue | App.ku.vue -->
 
 <script setup lang="ts">
@@ -221,7 +221,7 @@ defineExpose({
 
 #### 3. 通过特有内置方法 `getCurrentPages()` 获取暴露的数据
 
-```ts
+```vue
 <!-- src/pages/*.vue -->
 
 <script setup lang="ts">
@@ -262,7 +262,7 @@ onMounted(() => {
 
 1. 编写 Toast 组件
 
-```ts
+```vue
 <!-- src/components/GlobalToast.vue -->
 
 <script setup lang="ts">
@@ -327,7 +327,7 @@ export function useToast() {
 
 3. 挂载至 App.ku.vue
 
-```ts
+```vue
 <!-- src/App.ku.vue -->
 
 <script setup lang="ts">
@@ -342,7 +342,7 @@ import GlobalToast from '@/components/GlobalToast.vue'
 
 4. 视图内部触发全局 Toast 组件
 
-```ts
+```vue
 <!-- src/pages/*.vue -->
 
 <script setup lang="ts">
@@ -372,9 +372,11 @@ const { showToast } = useToast()
 
 > 不仅仅只有ConfigProvider，还能是Layout、NavBar、TabBar等等！
 
-1. 以 Wot 组件库中 WdConfigProvider 为例子，[了解更多Wot点这里](https://github.com/Moonofweisheng/wot-design-uni)
+如果你正在使用wot组件，那么可以直接从这里获取到相关使用文档[点击查看](https://wot-design-uni.cn/component/config-provider.html#%E5%85%A8%E5%B1%80%E5%85%B1%E4%BA%AB)
 
-```ts
+1. 以 Wot 组件库中 WdConfigProvider 为例子
+
+```vue
 <!-- src/App.ku.vue -->
 
 <script setup lang="ts">
@@ -423,7 +425,7 @@ export function useTheme(vars?: ConfigProviderThemeVars) {
 
 3. 切换主题模式
 
-```ts
+```vue
 <!-- src/pages/*.vue -->
 
 <script setup lang="ts">
@@ -449,7 +451,15 @@ const { theme, toggleTheme } = useTheme()
 - [ ] 支持 App.ku.vue 内直接编写控制逻辑
 - [ ] 补全单元测试
 
-### 💬 社区
+### 🤔 与uni-helper-layouts的区别
+
+- root 是 layouts 之上，提供更多的自由度，能够实现layouts的效果，更加容易控制布局组件
+- root 能够使用PageMeta，自动提取到页面顶层节点
+- root 拥有不同的方式使用模板引用
+
+> root的核心理念就是尽可能的靠近Vue中的App.vue
+
+### 📣 社区
 
 - QQ 交流群 ([897784703](https://qm.qq.com/q/hX1smd93MI))
 
