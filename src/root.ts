@@ -1,13 +1,12 @@
-import { promises as fs } from 'node:fs'
-
 import { MagicString } from 'vue/compiler-sfc'
+import { parseSFC } from './utils'
 
 export async function registerKuApp(code: string, fileName: string = 'App.ku') {
   const ms = new MagicString(code)
 
-  const importCode = `import UniKuAppRoot from "./${fileName}.vue";`
+  const importCode = `import GlobalKuRoot from "./${fileName}.vue";`
 
-  const vueUseComponentCode = `app.component("uni-ku-app-root", UniKuAppRoot);`
+  const vueUseComponentCode = `app.component("global-ku-root", GlobalKuRoot);`
 
   ms.prepend(`${importCode}\n`).replace(
     /(createApp[\s\S]*?)(return\s\{\s*app)/,
@@ -17,11 +16,25 @@ export async function registerKuApp(code: string, fileName: string = 'App.ku') {
   return ms
 }
 
-export async function rebuildKuApp(path: string) {
+export async function rebuildKuApp(code: string) {
+  const ms = new MagicString(code)
   const rootTagNameRE = /<(KuRootView|ku-root-view)\s*\/>/
 
-  const code = await fs.readFile(path, 'utf-8')
-  const ms = new MagicString(code).replace(rootTagNameRE, '<slot />')
+  ms.replace(rootTagNameRE, '<slot />')
+
+  const sfc = await parseSFC(code)
+  if (sfc.script) {
+    return ms
+  }
+
+  const langType = sfc.scriptSetup?.lang
+
+  ms.append(`<script ${langType ? `lang="${langType}"` : ''}>
+  export default {
+    options: {
+      virtualHost: true,
+    },
+  }\n</script>`)
 
   return ms
 }

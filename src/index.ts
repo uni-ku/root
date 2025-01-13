@@ -1,15 +1,16 @@
-import process from 'node:process'
-import { resolve } from 'node:path'
-
+import type { FSWatcher } from 'chokidar'
 import type { Plugin } from 'vite'
+import type { MagicString } from 'vue/compiler-sfc'
+
+import { resolve } from 'node:path'
+import process from 'node:process'
+
+import chokidar from 'chokidar'
 import { createFilter } from 'vite'
 
-import type { MagicString } from 'vue/compiler-sfc'
-import chokidar from 'chokidar'
-
-import { loadPagesJson } from './utils'
-import { rebuildKuApp, registerKuApp } from './root'
 import { transformPage } from './page'
+import { rebuildKuApp, registerKuApp } from './root'
+import { loadPagesJson } from './utils'
 
 interface UniKuRootOptions {
   /**
@@ -33,7 +34,7 @@ export default function UniKuRoot(options: UniKuRootOptions = {
 
   let pagesJson = loadPagesJson(pagesPath, rootPath)
 
-  let watcher: chokidar.FSWatcher | null = null
+  let watcher: FSWatcher | null = null
 
   return {
     name: 'vite-plugin-uni-root',
@@ -49,12 +50,14 @@ export default function UniKuRoot(options: UniKuRootOptions = {
       let ms: MagicString | null = null
 
       const filterMain = createFilter(`${rootPath}/main.(ts|js)`)
-      if (filterMain(id))
+      if (filterMain(id)) {
         ms = await registerKuApp(code, options.rootFileName)
+      }
 
-      const filterKuRoot = createFilter(`${rootPath}/${options.rootFileName}.vue`)
-      if (filterKuRoot(id))
-        ms = await rebuildKuApp(appKuPath)
+      const filterKuRoot = createFilter(appKuPath)
+      if (filterKuRoot(id)) {
+        ms = await rebuildKuApp(code)
+      }
 
       const filterPage = createFilter(pagesJson)
       if (filterPage(id)) {

@@ -30,8 +30,8 @@ export async function transformPage(code: string, enabledGlobalRef = false) {
   }
 
   if (pageTempStart && pageTempEnd) {
-    ms.appendLeft(pageTempStart, `\n${pageMetaSource}\n<uni-ku-app-root ${pageRootRefSource}>`)
-    ms.appendRight(pageTempEnd, `</uni-ku-app-root>\n`)
+    ms.appendLeft(pageTempStart, `\n${pageMetaSource}\n<global-ku-root ${pageRootRefSource}>`)
+    ms.appendRight(pageTempEnd, `</global-ku-root>\n`)
   }
 
   return ms

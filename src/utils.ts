@@ -1,12 +1,11 @@
+import type { SFCDescriptor } from 'vue/compiler-sfc'
 import { readFileSync } from 'node:fs'
+
 import { join } from 'node:path'
 
 import { parse as jsonParse } from 'jsonc-parser'
-
-import type { SFCDescriptor } from 'vue/compiler-sfc'
-import { parse as VueParser } from 'vue/compiler-sfc'
-
 import { normalizePath } from 'vite'
+import { parse as VueParser } from 'vue/compiler-sfc'
 
 export async function parseSFC(code: string): Promise<SFCDescriptor> {
   try {
