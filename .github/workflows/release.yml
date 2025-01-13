@@ -24,8 +24,8 @@ jobs:
           tags=($(git tag -l --sort=-version:refname))
           current_tag=${tags[0]}
           previous_tag=${tags[1]}
-          echo "::set-output name=current_tag::$current_tag"
-          echo "::set-output name=previous_tag::$previous_tag"
+          echo "previous_tag=$previous_tag" >> $GITHUB_OUTPUT
+          echo "current_tag=$current_tag" >> $GITHUB_OUTPUT
 
       - name: 提取并分类提交消息
         id: extract_commit_messages
@@ -33,21 +33,56 @@ jobs:
           set -e
           current_tag="${{ steps.get_tags.outputs.current_tag }}"
           previous_tag="${{ steps.get_tags.outputs.previous_tag }}"
-          commit_messages=$(git log --pretty=format:"%s - by @%an (%h)" "$previous_tag".."$current_tag" | grep -E 'feat|fix|docs|perf')
-          feat_messages=$(echo "$commit_messages" | grep 'feat' || true)
-          fix_messages=$(echo "$commit_messages" | grep 'fix' || true)
-          docs_messages=$(echo "$commit_messages" | grep 'docs' || true)
-          perf_messages=$(echo "$commit_messages" | grep 'perf' || true)
-          echo "::set-output name=feat_messages::${feat_messages[@]}"
-          echo "::set-output name=fix_messages::${fix_messages[@]}"
-          echo "::set-output name=docs_messages::${docs_messages[@]}"
-          echo "::set-output name=perf_messages::${perf_messages[@]}"
+          if [ -z "$previous_tag" ]; then
+            commit_messages=$(git log --pretty=format:"%s - by @%an (%h)" "$current_tag" | grep -E 'feat|fix|docs|perf' || true)
+          else
+            commit_messages=$(git log --pretty=format:"%s - by @%an (%h)" "$previous_tag".."$current_tag" | grep -E 'feat|fix|docs|perf' || true)
+          fi
+
+          # 转义 ` 字符
+          commit_messages=$(echo "$commit_messages" | sed 's/`/\\\`/g')
+
+          # feat_messages=$(echo "$commit_messages" | grep 'feat' || true)
+          # fix_messages=$(echo "$commit_messages" | grep 'fix' || true)
+          # docs_messages=$(echo "$commit_messages" | grep 'docs' || true)
+          # perf_messages=$(echo "$commit_messages" | grep 'perf' || true)
+
+          # feat_messages=("${feat_messages[@]//\`/\\\`}")
+          # fix_messages=("${fix_messages[@]//\`/\\\`}")
+          # docs_messages=("${docs_messages[@]//\`/\\\`}")
+          # perf_messages=("${perf_messages[@]//\`/\\\`}")
+
+          # echo "feat_messages=(${feat_messages[@]})" >> $GITHUB_OUTPUT
+          # echo "fix_messages=(${fix_messages[@]})" >> $GITHUB_OUTPUT
+          # echo "docs_messages=(${docs_messages[@]})" >> $GITHUB_OUTPUT
+          # echo "perf_messages=(${perf_messages[@]})" >> $GITHUB_OUTPUT
+
+          {
+            echo 'feat_messages<<EOF'
+            echo "$commit_messages" | grep 'feat' || true
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
+          {
+            echo 'fix_messages<<EOF'
+            echo "$commit_messages" | grep 'fix' || true
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
+          {
+            echo 'docs_messages<<EOF'
+            echo "$commit_messages" | grep 'docs' || true
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
+          {
+            echo 'perf_messages<<EOF'
+            echo "$commit_messages" | grep 'perf' || true
+            echo 'EOF'
+          } >> $GITHUB_OUTPUT
 
       - name: 获取当前分支名
         id: get_branch_name
         run: |
           branch_name=$(git rev-parse --abbrev-ref HEAD)
-          echo "::set-output name=branch_name::$branch_name"
+          echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
 
       - name: 发版详情
         id: generate_release_notes
@@ -58,34 +93,39 @@ jobs:
           docs_messages=("${{ steps.extract_commit_messages.outputs.docs_messages }}")
           perf_messages=("${{ steps.extract_commit_messages.outputs.perf_messages }}")
 
+          release_notes=""
+
           if [[ -n "$feat_messages" ]]; then
             release_notes="$release_notes\n### 🚀 Features 新功能:  \n"
-            for message in "${feat_messages[@]}"; do
+            while IFS= read -r message; do
               release_notes="$release_notes\n- $message"
-            done
+            done <<< "$feat_messages"
           fi
 
           if [[ -n "$fix_messages" ]]; then
             release_notes="$release_notes\n### 🩹 Fixes 缺陷修复:  \n"
-            for message in "${fix_messages[@]}"; do
+            while IFS= read -r message; do
               release_notes="$release_notes\n- $message"
-            done
+            done <<< "$fix_messages"
           fi
 
           if [[ -n "$docs_messages" ]]; then
             release_notes="$release_notes\n### 📖 Documentation 文档:  \n"
-            for message in "${docs_messages[@]}"; do
+            while IFS= read -r message; do
               release_notes="$release_notes\n- $message"
-            done
+            done <<< "$docs_messages"
           fi
 
           if [[ -n "$perf_messages" ]]; then
             release_notes="$release_notes\n### 🔥 Performance 性能优化:  \n"
-            for message in "${perf_messages[@]}"; do
+            while IFS= read -r message; do
               release_notes="$release_notes\n- $message"
-            done
+            done <<< "$perf_messages"
           fi
-          echo "::set-output name=release_notes::$release_notes"
+
+          # 转义 ` 字符
+          release_notes=$(echo "$release_notes" | sed 's/`/\\\`/g')
+          echo "release_notes=$release_notes" >> $GITHUB_OUTPUT
 
       - name: 写入生成的发布说明到 changelog.md
         run: |
