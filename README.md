@@ -476,6 +476,10 @@ const { theme, toggleTheme } = useTheme()
 
 > 请留下您的Github用户名，感谢 ❤
 
+#### 爱发电赞赏
+
+[https://afdian.com/a/skiyee](https://afdian.com/a/skiyee)
+
 #### 微信赞赏
 
 <img src="https://cdn.jsdelivr.net/gh/Skiyee/sponsors@main/assets/wechat-pay.png" alt="wechat-pay" width="320" />
