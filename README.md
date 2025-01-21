@@ -454,13 +454,14 @@ const { theme, toggleTheme } = useTheme()
 
 ### 🤔 与uni-helper-layouts的区别
 
-[!IMPORTANT] root的核心理念就是尽可能的靠近Vue中的App.vue，layouts 则是类nuxt的布局系统
+> [!Important]
+> root的核心理念就是尽可能的靠近Vue中的App.vue，layouts 则是类nuxt的布局系统
 
 - root 是 layouts 之上，提供更多的自由度，能够实现layouts的效果，更加容易控制布局组件
 - root 能够使用PageMeta，自动提取到页面顶层节点
 - root 拥有不同的方式使用模板引用
 
-> [uni-helper-layouts](https://github.com/uni-helper/vite-plugin-uni-layouts)
+> [github: uni-helper-layouts](https://github.com/uni-helper/vite-plugin-uni-layouts)
 
 ### 📣 社区
 
