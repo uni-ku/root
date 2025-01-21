@@ -14,6 +14,7 @@
 - Uniapp-(CLI、HBuilderX) 创建的 Vue3 项目
 - 自定义虚拟根组件文件命名
 - 更高灵活度的获取虚拟根组件实例
+- 自动提取PageMeta到页面顶层
 
 ### 📦 安装
 
@@ -453,15 +454,17 @@ const { theme, toggleTheme } = useTheme()
 
 ### 🤔 与uni-helper-layouts的区别
 
+[!IMPORTANT] root的核心理念就是尽可能的靠近Vue中的App.vue，layouts 则是类nuxt的布局系统
+
 - root 是 layouts 之上，提供更多的自由度，能够实现layouts的效果，更加容易控制布局组件
 - root 能够使用PageMeta，自动提取到页面顶层节点
 - root 拥有不同的方式使用模板引用
 
-> root的核心理念就是尽可能的靠近Vue中的App.vue
+> [uni-helper-layouts](https://github.com/uni-helper/vite-plugin-uni-layouts)
 
 ### 📣 社区
 
-- QQ 交流群 ([897784703](https://qm.qq.com/q/hX1smd93MI))
+- QQ 交流群 ([976866565](https://qm.qq.com/q/FyHN1X5qwK))
 
 ### 🏝 周边
 
