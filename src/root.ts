@@ -18,9 +18,16 @@ export async function registerKuApp(code: string, fileName: string = 'App.ku') {
 
 export async function rebuildKuApp(code: string) {
   const ms = new MagicString(code)
-  const rootTagNameRE = /<(KuRootView|ku-root-view)\s*\/>/
-
-  ms.replace(rootTagNameRE, '<slot />')
+  // 匹配开放标签
+  ms.replace(
+    /<(KuRootView|ku-root-view)[^>]*>(.*?)<\/\1>/gi,
+    '<slot$2>$3</slot>',
+  )
+  // 匹配自闭和标签
+  ms.replace(
+    /<(KuRootView|ku-root-view)(.*?)\/>/gi,
+    '<slot$2/>',
+  )
 
   const sfc = await parseSFC(code)
   if (sfc.script) {
