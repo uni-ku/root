@@ -7,14 +7,15 @@
 [![LICENSE](https://img.shields.io/github/license/uni-ku/root?style=flat&color=92DCD2&labelColor=18181B&label=license)](https://www.npmjs.com/package/@uni-ku/root)
 
 > [!Tip]
-> 从 v0.2.0 开始, 已支持 HBuilderX 创建的 Vue3 项目
+> Root 支持 HBuilderX 或者 CLI 创建的 Uniapp Vue3 项目
+>
+> 新增可通过 useXXX() 组合式方法调用的例子，适用于各大由此方案实现的组件库，请往下拉至例子区域
 
 ### 🎏 支持
 
-- Uniapp-(CLI、HBuilderX) 创建的 Vue3 项目
-- 自定义虚拟根组件文件命名
-- 更高灵活度的获取虚拟根组件实例
-- 自动提取PageMeta到页面顶层
+- 自定义虚拟根组件文件命名(App.ku.vue文件命名支持更换)
+- 更高灵活度的获取虚拟根组件实例(获取KuRootView的Ref)
+- 自动提取PageMeta到页面顶层(自动提升小程序PageMeta[用于阻止滚动穿透]组件)
 
 ### 📦 安装
 
@@ -112,7 +113,11 @@ export default defineConfig({
 })
 ```
 
-2. 创建/修改虚拟根组件为 `KuRoot.vue`，即可实现自定义，其余功能不变
+#### 2. 创建/修改虚拟根组件为 `KuRoot.vue`，即可实现自定义，其余功能不变
+
+```ts
+// App.ku.vue 文件重命名为 KuRoot.vue
+```
 
 </details>
 
@@ -123,7 +128,6 @@ export default defineConfig({
 </summary>
 <br/>
 
-> [!TIP]
 > 有两种启用方式，局部或全部启用
 
 #### 一、 局部启用
@@ -155,8 +159,7 @@ defineExpose({
 
 #### 2. 在 template 内编写 root="uniKuRoot"，并通过 const uniKuRoot = ref() 获取模板引用
 
-> [!TIP]
-> uniKuRoot 是同一个变量，你可以根据你命名相关命名
+> uniKuRoot 仅是一个变量，你可以根据你习惯重新命名
 
 ```vue
 <!-- src/pages/*.vue -->
@@ -439,6 +442,50 @@ const { theme, toggleTheme } = useTheme()
   <button @click="toggleTheme">
     切换主题，当前模式：{{ theme }}
   </button>
+</template>
+```
+
+</details>
+
+<details>
+
+<summary>
+  <strong>(点击展开) 示例三：Wot的 Toast、Notify 组件的调用方式</strong>
+</summary>
+<br />
+
+> 以下示例以 Toast 为例子
+
+1. 挂载组件
+
+```vue
+<!-- src/App.ku.vue -->
+<template>
+  <KuRootView />
+  <!-- 注意：需要先注册 WdToast 组件才可使用 -->
+  <WdToast />
+</template>
+```
+
+2. 调用组件
+
+```vue
+<!-- src/pages/*.vue -->
+<script setup lang="ts">
+import { useToast } from '@/uni_modules/wot-design-uni'
+
+const toast = useToast()
+
+function showToast() {
+  toast.show('Hey there, this is @uni-ku/root')
+}
+</script>
+
+<template>
+  <view>这是在任意页面才可见</view>
+  <WdButton @click="showToast">
+    展示Toast信息
+  </WdButton>
 </template>
 ```
 
