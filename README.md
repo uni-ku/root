@@ -459,7 +459,7 @@ const { theme, toggleTheme } = useTheme()
 1. 挂载组件
 
 ```vue
-<!-- src/App.ku.vue -->
+<!-- src/App.ku.vue | App.ku.vue -->
 <template>
   <KuRootView />
   <!-- 注意：需要先注册 WdToast 组件才可使用 -->
