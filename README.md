@@ -7,6 +7,9 @@
 [![LICENSE](https://img.shields.io/github/license/uni-ku/root?style=flat&color=92DCD2&labelColor=18181B&label=license)](https://www.npmjs.com/package/@uni-ku/root)
 
 > [!Tip]
+> 我们提供基于 Uniapp 技术支持服务及定制开发，详细需求可添加作者了解，联系QQ: 319619193
+
+> [!Note]
 > Root 支持 HBuilderX 或者 CLI 创建的 Uniapp Vue3 项目
 >
 > 新增可通过 useXXX() 组合式方法调用的例子，适用于各大由此方案实现的组件库，请往下拉至例子区域
