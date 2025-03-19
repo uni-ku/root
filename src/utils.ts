@@ -85,5 +85,23 @@ export function findNode(sfc: SFCDescriptor, rawTagName: string): TagNode | unde
   if (!nodeAst)
     return
 
-  return nodeAst.children.find(node => node.type === 1 && node.tag === tagName)
+  // 递归遍历AST节点
+  const traverse = (nodes: any) => {
+    for (const node of nodes) {
+      if (node.type === 1) { // ElementNode
+        // 检查标签是否匹配任一可能格式
+        if (node.tag === tagName)
+          return node
+        // 递归搜索子节点
+        if (node.children?.length) {
+          const found = traverse(node.children) as TagNode
+          if (found)
+            return found
+        }
+      }
+    }
+    return undefined
+  }
+
+  return traverse(nodeAst.children)
 }
