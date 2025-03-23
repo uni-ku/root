@@ -34,6 +34,7 @@ export async function rebuildKuApp(code: string) {
     options: {
       virtualHost: true,
     },
+    inheritAttrs: false
   }\n</script>`)
 
   return ms
