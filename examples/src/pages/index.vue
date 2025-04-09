@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import FeatWrapper from '@/components/FeatWrapper.vue'
 import { useToast } from '@/composables/useToast'
 import LayoutDefault from '@/layouts/default.vue'
 import { onMounted, ref } from 'vue'
@@ -29,5 +30,8 @@ onMounted(() => {
     <button @click="handleClick">
       展示Toast
     </button>
+    <KuPin>
+      <FeatWrapper />
+    </KuPin>
   </LayoutDefault>
 </template>

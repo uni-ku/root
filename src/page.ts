@@ -21,6 +21,18 @@ export async function transformPage(code: string, enabledGlobalRef = false) {
     ms.remove(metaTempStart, metaTempEnd)
   }
 
+  let kuPinSource = ''
+  const kuPinNode = findNode(sfc, 'KuPin')
+
+  if (kuPinNode) {
+    kuPinSource = kuPinNode.loc.source.replace(/(KuPin|ku-pin)/g, 'div')
+
+    const tagTempStart = kuPinNode.loc.start.offset
+    const tagTempEnd = kuPinNode.loc.end.offset
+
+    ms.remove(tagTempStart, tagTempEnd)
+  }
+
   const pageTempAttrs = sfc.template?.attrs
 
   let pageRootRefSource = enabledGlobalRef ? 'ref="uniKuRoot"' : ''
@@ -31,7 +43,7 @@ export async function transformPage(code: string, enabledGlobalRef = false) {
 
   if (pageTempStart && pageTempEnd) {
     ms.appendLeft(pageTempStart, `\n${pageMetaSource}\n<global-ku-root ${pageRootRefSource}>`)
-    ms.appendRight(pageTempEnd, `</global-ku-root>\n`)
+    ms.appendRight(pageTempEnd, `\n${kuPinSource}\n</global-ku-root>\n`)
   }
 
   return ms
