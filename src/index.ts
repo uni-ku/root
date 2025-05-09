@@ -14,6 +14,11 @@ import { loadPagesJson } from './utils'
 
 interface UniKuRootOptions {
   /**
+   * 是否启用虚拟节点
+   * @default false
+   */
+  enabledVirtualHost?: boolean
+  /**
    * 是否启用全局ref
    * @default false
    */
@@ -56,7 +61,7 @@ export default function UniKuRoot(options: UniKuRootOptions = {
 
       const filterKuRoot = createFilter(appKuPath)
       if (filterKuRoot(id)) {
-        ms = await rebuildKuApp(code)
+        ms = await rebuildKuApp(code, options.enabledVirtualHost)
       }
 
       const filterPage = createFilter(pagesJson)

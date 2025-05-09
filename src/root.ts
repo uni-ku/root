@@ -16,26 +16,28 @@ export async function registerKuApp(code: string, fileName: string = 'App.ku') {
   return ms
 }
 
-export async function rebuildKuApp(code: string) {
+export async function rebuildKuApp(code: string, enabledVirtualHost: boolean = true) {
   const ms = new MagicString(code)
   const rootTagNameRE = /<(KuRootView|ku-root-view)\s*\/>/
 
   ms.replace(rootTagNameRE, '<slot />')
 
-  const sfc = await parseSFC(code)
-  if (sfc.script) {
-    return ms
+  if (enabledVirtualHost) {
+    const sfc = await parseSFC(code)
+    if (sfc.script) {
+      return ms
+    }
+
+    const langType = sfc.scriptSetup?.lang
+
+    ms.append(`<script ${langType ? `lang="${langType}"` : ''}>
+    export default {
+      options: {
+        virtualHost: true,
+      },
+      inheritAttrs: false
+    }\n</script>`)
   }
-
-  const langType = sfc.scriptSetup?.lang
-
-  ms.append(`<script ${langType ? `lang="${langType}"` : ''}>
-  export default {
-    options: {
-      virtualHost: true,
-    },
-    inheritAttrs: false
-  }\n</script>`)
 
   return ms
 }
