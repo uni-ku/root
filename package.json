@@ -45,11 +45,13 @@
     "example:dev:mp-weixin": "pnpm build && pnpm -C examples run dev:mp-weixin",
     "example:build:mp-weixin": "pnpm build && pnpm -C examples run build:mp-weixin",
     "prepare": "simple-git-hooks",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
+    "@vue/compiler-sfc": "~3.2.13",
     "vite": ">=5.0.0",
-    "vue": ">=3.2.13"
+    "vue": "~3.2.13"
   },
   "dependencies": {
     "chokidar": "^3.6.0",
