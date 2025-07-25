@@ -1,6 +1,6 @@
+import type { MagicString } from '@vue/compiler-sfc'
 import type { FSWatcher } from 'chokidar'
 import type { Plugin } from 'vite'
-import type { MagicString } from 'vue/compiler-sfc'
 
 import { resolve } from 'node:path'
 import process from 'node:process'

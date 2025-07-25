@@ -1,4 +1,4 @@
-import { MagicString } from 'vue/compiler-sfc'
+import { MagicString } from '@vue/compiler-sfc'
 
 import { findNode, parseSFC } from './utils'
 

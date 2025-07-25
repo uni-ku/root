@@ -49,11 +49,10 @@
     "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
-    "@vue/compiler-sfc": "~3.2.13",
-    "vite": ">=5.0.0",
-    "vue": "~3.2.13"
+    "vite": "^5.0.0"
   },
   "dependencies": {
+    "@vue/compiler-sfc": "3.4.21",
     "chokidar": "^3.6.0",
     "jsonc-parser": "^3.3.1"
   },
