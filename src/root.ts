@@ -18,7 +18,7 @@ export async function registerKuApp(code: string, fileName: string = 'App.ku') {
 
 export async function rebuildKuApp(code: string, enabledVirtualHost: boolean = true) {
   const ms = new MagicString(code)
-  const rootTagNameRE = /<(KuRootView|ku-root-view)\s*\/>/
+  const rootTagNameRE = /<(KuRootView|ku-root-view)(\s*\/>|><\/\1>)/
 
   ms.replace(rootTagNameRE, '<slot />')
 
