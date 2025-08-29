@@ -519,10 +519,11 @@ function showToast() {
 
 ### 🏝 周边
 
-|项目|描述|
-|---|---|
-|[Wot Design Uni](https://github.com/Moonofweisheng/wot-design-uni/)|一个基于Vue3+TS开发的uni-app组件库，提供70+高质量组件|
-|[Create Uni](https://github.com/uni-helper/create-uni)|一个用于快速创建 uni-app 项目的轻量脚手架工具|
+| 项目                                                                | 描述                                                  |
+|---------------------------------------------------------------------|-------------------------------------------------------|
+| [Wot Design Uni](https://github.com/Moonofweisheng/wot-design-uni/) | 一个基于Vue3+TS开发的uni-app组件库，提供70+高质量组件 |
+| [Create Uni](https://github.com/uni-helper/create-uni)              | 一个用于快速创建 uni-app 项目的轻量脚手架工具         |
+| [Uni Best](https://github.com/unibest-tech/unibest)                 | 最好用的 uniapp 开发框架                              |
 
 ### 💖 赞赏
 
