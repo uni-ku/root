@@ -10,7 +10,7 @@ import { createFilter } from 'vite'
 
 import { transformPage } from './page'
 import { rebuildKuApp, registerKuApp } from './root'
-import { loadPagesJson } from './utils'
+import { loadPagesJson, normalizePlatformPath } from './utils'
 
 interface UniKuRootOptions {
   /**
@@ -41,9 +41,14 @@ export default function UniKuRoot(options: UniKuRootOptions = {
 
   let watcher: FSWatcher | null = null
 
+  let hasPlatformPlugin = false
+
   return {
     name: 'vite-plugin-uni-root',
     enforce: 'pre',
+    configResolved({ plugins }) {
+      hasPlatformPlugin = plugins.some(v => v.name === 'vite-plugin-uni-platform')
+    },
     buildStart() {
       watcher = chokidar.watch(pagesPath).on('all', (event) => {
         if (['add', 'change'].includes(event)) {
@@ -64,8 +69,10 @@ export default function UniKuRoot(options: UniKuRootOptions = {
         ms = await rebuildKuApp(code, options.enabledVirtualHost)
       }
 
+      const pageId = hasPlatformPlugin ? normalizePlatformPath(id) : id
+
       const filterPage = createFilter(pagesJson)
-      if (filterPage(id)) {
+      if (filterPage(pageId)) {
         ms = await transformPage(code, options.enabledGlobalRef)
       }
 

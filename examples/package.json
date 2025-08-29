@@ -20,6 +20,7 @@
     "@dcloudio/uni-automator": "3.0.0-4040520250104002",
     "@dcloudio/uni-cli-shared": "3.0.0-4040520250104002",
     "@dcloudio/vite-plugin-uni": "3.0.0-4040520250104002",
+    "@uni-helper/vite-plugin-uni-platform": "^0.0.5",
     "@uni-ku/root": "workspace:*"
   }
 }

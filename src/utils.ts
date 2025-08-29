@@ -1,7 +1,7 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { readFileSync } from 'node:fs'
-
-import { join } from 'node:path'
+import { extname, join } from 'node:path'
+import process from 'node:process'
 
 import { parse as VueParser } from '@vue/compiler-sfc'
 import { parse as jsonParse } from 'jsonc-parser'
@@ -104,4 +104,20 @@ export function findNode(sfc: SFCDescriptor, rawTagName: string): TagNode | unde
   }
 
   return traverse(nodeAst.children)
+}
+
+const platform = process.env.UNI_PLATFORM
+
+export function normalizePlatformPath(id: string) {
+  const idExt = extname(id)
+
+  if (idExt !== '.vue') {
+    return id
+  }
+
+  if (!id.includes(`.${platform}.`)) {
+    return id
+  }
+
+  return id.replace(`.${platform}.`, '.')
 }

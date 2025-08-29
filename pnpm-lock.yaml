@@ -91,6 +91,9 @@ importers:
       '@dcloudio/vite-plugin-uni':
         specifier: 3.0.0-4040520250104002
         version: 3.0.0-4040520250104002(postcss@8.4.49)(rollup@4.30.1)(vite@5.4.11(@types/node@22.10.5)(terser@5.31.3))(vue@3.5.13(typescript@5.7.3))
+      '@uni-helper/vite-plugin-uni-platform':
+        specifier: ^0.0.5
+        version: 0.0.5
       '@uni-ku/root':
         specifier: workspace:*
         version: link:..
@@ -2115,6 +2118,12 @@ packages:
   '@typescript-eslint/visitor-keys@8.19.1':
     resolution: {integrity: sha512-fzmjU8CHK853V/avYZAvuVut3ZTfwN5YtMaoi+X9Y9MA9keaWNHC3zEQ9zvyX/7Hj+5JkNyK1l7TOR2hevHB6Q==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@uni-helper/uni-env@0.1.8':
+    resolution: {integrity: sha512-oZQisgM5sFarGrswKHJvS5S7xNMXLjcBcPTKp2gzLMon+chdHiKua1+Hlqe/NX79Re35W4A6/QHDrw9cZ5AVGQ==}
+
+  '@uni-helper/vite-plugin-uni-platform@0.0.5':
+    resolution: {integrity: sha512-T0lUwM3bGtGTcig3TBWP3VyRUQAY39/TMGL0064YMv8mt3F55S3KfpW7HIKEzV+EPF41TBX1ahhspuN8MJrpew==}
 
   '@vitejs/plugin-legacy@5.3.2':
     resolution: {integrity: sha512-8moCOrIMaZ/Rjln0Q6GsH6s8fAt1JOI3k8nmfX4tXUxE5KAExVctSyOBk+A25GClsdSWqIk2yaUthH3KJ2X4tg==}
@@ -8379,6 +8388,14 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.19.1
       eslint-visitor-keys: 4.2.0
+
+  '@uni-helper/uni-env@0.1.8':
+    dependencies:
+      std-env: 3.8.0
+
+  '@uni-helper/vite-plugin-uni-platform@0.0.5':
+    dependencies:
+      '@uni-helper/uni-env': 0.1.8
 
   '@vitejs/plugin-legacy@5.3.2(terser@5.31.3)(vite@5.4.11(@types/node@22.10.5)(terser@5.31.3))':
     dependencies:
