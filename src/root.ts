@@ -16,7 +16,7 @@ export async function registerKuApp(code: string, fileName: string = 'App.ku') {
   return ms
 }
 
-export async function rebuildKuApp(code: string, enabledVirtualHost: boolean = true) {
+export async function rebuildKuApp(code: string, enabledVirtualHost: boolean = false) {
   const ms = new MagicString(code)
   const rootTagNameRE = /<(KuRootView|ku-root-view)(\s*\/>|><\/\1>)/
 
@@ -34,8 +34,7 @@ export async function rebuildKuApp(code: string, enabledVirtualHost: boolean = t
     export default {
       options: {
         virtualHost: true,
-      },
-      inheritAttrs: false
+      }
     }\n</script>`)
   }
 
