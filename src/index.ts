@@ -1,6 +1,6 @@
 import type { MagicString } from '@vue/compiler-sfc'
 import type { FSWatcher } from 'chokidar'
-import type { Plugin } from 'vite'
+import type { FilterPattern, Plugin } from 'vite'
 
 import { resolve } from 'node:path'
 import process from 'node:process'
@@ -29,9 +29,9 @@ interface UniKuRootOptions {
    */
   rootFileName?: string
   /**
-   * 页面过滤钩子
+   * 需要排除的路径模式（glob 格式）
    */
-  filterPage?: (pagePaths: string[]) => string[]
+  exclude?: FilterPattern
 }
 
 export default function UniKuRoot(options: UniKuRootOptions = {
@@ -41,8 +41,7 @@ export default function UniKuRoot(options: UniKuRootOptions = {
   const appKuPath = resolve(rootPath, `${options.rootFileName}.vue`)
   const pagesPath = resolve(rootPath, 'pages.json')
 
-  let rawPagesJson = loadPagesJson(pagesPath, rootPath)
-  let pagesJson = options.filterPage ? options.filterPage(rawPagesJson) : rawPagesJson
+  let pagesJson = loadPagesJson(pagesPath, rootPath)
 
   let watcher: FSWatcher | null = null
 
@@ -57,8 +56,7 @@ export default function UniKuRoot(options: UniKuRootOptions = {
     buildStart() {
       watcher = chokidar.watch(pagesPath).on('all', (event) => {
         if (['add', 'change'].includes(event)) {
-          rawPagesJson = loadPagesJson(pagesPath, rootPath)
-          pagesJson = options.filterPage ? options.filterPage(rawPagesJson) : rawPagesJson
+          pagesJson = loadPagesJson(pagesPath, rootPath)
         }
       })
     },
@@ -77,7 +75,7 @@ export default function UniKuRoot(options: UniKuRootOptions = {
 
       const pageId = hasPlatformPlugin ? normalizePlatformPath(id) : id
 
-      const filterPage = createFilter(pagesJson)
+      const filterPage = createFilter(pagesJson, options.exclude)
       if (filterPage(pageId)) {
         ms = await transformPage(code, options.enabledGlobalRef)
       }
