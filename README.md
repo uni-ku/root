@@ -494,6 +494,36 @@ function showToast() {
 
 </details>
 
+<details>
+
+<summary>
+  <strong>(点击展开) 示例四：过滤不需要根组件的页面</strong>
+</summary>
+<br />
+
+总会有一些不需要根组件的页面，这时候可以通过 `exclude` 选项来过滤
+
+> 注意：`exclude` 选项支持 glob 模式，等同于 [createFilter](https://cn.vite.dev/guide/api-plugin.html#filtering-include-exclude-pattern)
+
+```ts
+// vite.config.(js|ts)
+
+import Uni from '@dcloudio/vite-plugin-uni'
+import UniKuRoot from '@uni-ku/root'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  plugins: [
+    UniKuRoot({
+      exclude: '**/excluded.vue'
+    }),
+    Uni()
+  ]
+})
+```
+
+</details>
+
 ### 📝 待办
 
 - [x] 支持热更新

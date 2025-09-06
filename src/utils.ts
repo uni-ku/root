@@ -22,7 +22,7 @@ export function formatPagePath(root: string, path: string) {
   return normalizePath(`${join(root, path)}.vue`)
 }
 
-export function loadPagesJson(path: string, rootPath: string) {
+export function loadPagesJson(path: string, rootPath: string): string[] {
   const pagesJsonRaw = readFileSync(path, 'utf-8')
 
   const { pages = [], subPackages = [] } = jsonParse(pagesJsonRaw)

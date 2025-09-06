@@ -1,6 +1,6 @@
 import type { MagicString } from '@vue/compiler-sfc'
 import type { FSWatcher } from 'chokidar'
-import type { Plugin } from 'vite'
+import type { FilterPattern, Plugin } from 'vite'
 
 import { resolve } from 'node:path'
 import process from 'node:process'
@@ -28,6 +28,10 @@ interface UniKuRootOptions {
    * @default 'App.ku'
    */
   rootFileName?: string
+  /**
+   * 需要排除的路径模式（glob 格式）
+   */
+  exclude?: FilterPattern
 }
 
 export default function UniKuRoot(options: UniKuRootOptions = {
@@ -71,7 +75,7 @@ export default function UniKuRoot(options: UniKuRootOptions = {
 
       const pageId = hasPlatformPlugin ? normalizePlatformPath(id) : id
 
-      const filterPage = createFilter(pagesJson)
+      const filterPage = createFilter(pagesJson, options.exclude)
       if (filterPage(pageId)) {
         ms = await transformPage(code, options.enabledGlobalRef)
       }
