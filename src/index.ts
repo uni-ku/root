@@ -29,9 +29,13 @@ interface UniKuRootOptions {
    */
   rootFileName?: string
   /**
-   * 需要排除的路径模式（glob 格式）
+   * 需要排除根组件的页面，支持 glob 匹配
+   * @example
+   * ```
+   * ['src/pages/some.vue', 'src/exclude/*.vue']
+   * ```
    */
-  exclude?: FilterPattern
+  excludePages?: FilterPattern
 }
 
 export default function UniKuRoot(options: UniKuRootOptions = {
@@ -75,7 +79,7 @@ export default function UniKuRoot(options: UniKuRootOptions = {
 
       const pageId = hasPlatformPlugin ? normalizePlatformPath(id) : id
 
-      const filterPage = createFilter(pagesJson, options.exclude)
+      const filterPage = createFilter(pagesJson, options.excludePages)
       if (filterPage(pageId)) {
         ms = await transformPage(code, options.enabledGlobalRef)
       }
