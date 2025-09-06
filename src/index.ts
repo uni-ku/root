@@ -28,6 +28,10 @@ interface UniKuRootOptions {
    * @default 'App.ku'
    */
   rootFileName?: string
+  /**
+   * 页面过滤钩子
+   */
+  filterPage?: (pagePaths: string[]) => string[]
 }
 
 export default function UniKuRoot(options: UniKuRootOptions = {
@@ -37,7 +41,8 @@ export default function UniKuRoot(options: UniKuRootOptions = {
   const appKuPath = resolve(rootPath, `${options.rootFileName}.vue`)
   const pagesPath = resolve(rootPath, 'pages.json')
 
-  let pagesJson = loadPagesJson(pagesPath, rootPath)
+  let rawPagesJson = loadPagesJson(pagesPath, rootPath)
+  let pagesJson = options.filterPage ? options.filterPage(rawPagesJson) : rawPagesJson
 
   let watcher: FSWatcher | null = null
 
@@ -52,7 +57,8 @@ export default function UniKuRoot(options: UniKuRootOptions = {
     buildStart() {
       watcher = chokidar.watch(pagesPath).on('all', (event) => {
         if (['add', 'change'].includes(event)) {
-          pagesJson = loadPagesJson(pagesPath, rootPath)
+          rawPagesJson = loadPagesJson(pagesPath, rootPath)
+          pagesJson = options.filterPage ? options.filterPage(rawPagesJson) : rawPagesJson
         }
       })
     },

@@ -12,6 +12,9 @@ export default defineConfig({
     UniKuRoot({
       enabledVirtualHost: false,
       rootFileName: 'KuRoot',
+      filterPage(pagePaths) {
+        return pagePaths.filter(path => !path.includes('excluded.vue'))
+      },
     }),
     Uni(),
   ],
