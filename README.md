@@ -251,6 +251,39 @@ onMounted(() => {
 
 </details>
 
+<details>
+
+<summary>
+  <strong>(点击展开) 功能三：过滤掉不需要根组件的页面</strong>
+</summary>
+<br />
+
+如果遇到一些不需要根组件的页面，可以设置 `excludePages` 选项来过滤
+
+> `excludePages` 选项支持采用 glob 模式进行编写
+
+```ts
+// vite.config.(js|ts)
+
+import Uni from '@dcloudio/vite-plugin-uni'
+import UniKuRoot from '@uni-ku/root'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  plugins: [
+    UniKuRoot({
+      excludePages: [
+        'src/exclude.vue',
+        'src/exclude/**/*.vue'
+      ],
+    }),
+    Uni()
+  ]
+})
+```
+
+</details>
+
 ### ✨ 例子
 
 > [!TIP]
