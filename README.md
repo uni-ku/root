@@ -251,6 +251,39 @@ onMounted(() => {
 
 </details>
 
+<details>
+
+<summary>
+  <strong>(点击展开) 功能三：过滤掉不需要根组件的页面</strong>
+</summary>
+<br />
+
+如果遇到一些不需要根组件的页面，可以设置 `excludePages` 选项来过滤
+
+> `excludePages` 选项支持采用 glob 模式进行编写
+
+```ts
+// vite.config.(js|ts)
+
+import Uni from '@dcloudio/vite-plugin-uni'
+import UniKuRoot from '@uni-ku/root'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  plugins: [
+    UniKuRoot({
+      excludePages: [
+        'src/exclude.vue',
+        'src/exclude/**/*.vue'
+      ],
+    }),
+    Uni()
+  ]
+})
+```
+
+</details>
+
 ### ✨ 例子
 
 > [!TIP]
@@ -490,36 +523,6 @@ function showToast() {
     展示Toast信息
   </WdButton>
 </template>
-```
-
-</details>
-
-<details>
-
-<summary>
-  <strong>(点击展开) 示例四：过滤不需要根组件的页面</strong>
-</summary>
-<br />
-
-总会有一些不需要根组件的页面，这时候可以通过 `exclude` 选项来过滤
-
-> 注意：`exclude` 选项支持 glob 模式，等同于 [createFilter](https://cn.vite.dev/guide/api-plugin.html#filtering-include-exclude-pattern)
-
-```ts
-// vite.config.(js|ts)
-
-import Uni from '@dcloudio/vite-plugin-uni'
-import UniKuRoot from '@uni-ku/root'
-import { defineConfig } from 'vite'
-
-export default defineConfig({
-  plugins: [
-    UniKuRoot({
-      exclude: '**/excluded.vue'
-    }),
-    Uni()
-  ]
-})
 ```
 
 </details>
