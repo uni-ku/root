@@ -38,9 +38,14 @@ interface UniKuRootOptions {
   excludePages?: FilterPattern
 }
 
-export default function UniKuRoot(options: UniKuRootOptions = {
-  rootFileName: 'App.ku',
-}): Plugin {
+export default function UniKuRoot(options: UniKuRootOptions): Plugin {
+  options = {
+    enabledVirtualHost: false,
+    enabledGlobalRef: false,
+    rootFileName: 'App.ku',
+    ...options,
+  }
+
   const rootPath = process.env.UNI_INPUT_DIR || (`${process.env.INIT_CWD}\\src`)
   const appKuPath = resolve(rootPath, `${options.rootFileName}.vue`)
   const pagesPath = resolve(rootPath, 'pages.json')
