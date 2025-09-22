@@ -121,3 +121,11 @@ export function normalizePlatformPath(id: string) {
 
   return id.replace(`.${platform}.`, '.')
 }
+
+export function toArray<T>(value: T | T[]): T[] {
+  if (!value) {
+    return []
+  }
+
+  return Array.isArray(value) ? value : [value]
+}

@@ -1,6 +1,6 @@
 import type { MagicString } from '@vue/compiler-sfc'
 import type { FSWatcher } from 'chokidar'
-import type { FilterPattern, Plugin } from 'vite'
+import type { Plugin } from 'vite'
 
 import { resolve } from 'node:path'
 import process from 'node:process'
@@ -10,7 +10,7 @@ import { createFilter } from 'vite'
 
 import { transformPage } from './page'
 import { rebuildKuApp, registerKuApp } from './root'
-import { loadPagesJson, normalizePlatformPath } from './utils'
+import { loadPagesJson, normalizePlatformPath, toArray } from './utils'
 
 interface UniKuRootOptions {
   /**
@@ -32,10 +32,10 @@ interface UniKuRootOptions {
    * 需要排除根组件的页面，支持 glob 匹配
    * @example
    * ```
-   * ['src/pages/some.vue', 'src/exclude/*.vue']
+   * ['pages/some.vue', 'pages/exclude/*.vue']
    * ```
    */
-  excludePages?: FilterPattern
+  excludePages?: string | string[]
 }
 
 export default function UniKuRoot(options?: UniKuRootOptions): Plugin {
@@ -49,6 +49,7 @@ export default function UniKuRoot(options?: UniKuRootOptions): Plugin {
   const rootPath = process.env.UNI_INPUT_DIR || (`${process.env.INIT_CWD}\\src`)
   const appKuPath = resolve(rootPath, `${options.rootFileName}.vue`)
   const pagesPath = resolve(rootPath, 'pages.json')
+  const excludedPaths = toArray(options.excludePages).filter(Boolean).map(path => resolve(rootPath, path!))
 
   let pagesJson = loadPagesJson(pagesPath, rootPath)
 
@@ -84,7 +85,7 @@ export default function UniKuRoot(options?: UniKuRootOptions): Plugin {
 
       const pageId = hasPlatformPlugin ? normalizePlatformPath(id) : id
 
-      const filterPage = createFilter(pagesJson, options.excludePages)
+      const filterPage = createFilter(pagesJson, excludedPaths)
       if (filterPage(pageId)) {
         ms = await transformPage(code, options.enabledGlobalRef)
       }

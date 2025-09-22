@@ -4,3 +4,4 @@ onlyBuiltDependencies:
   - core-js
   - esbuild
   - simple-git-hooks
+  - unrs-resolver
