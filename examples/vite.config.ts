@@ -12,7 +12,7 @@ export default defineConfig({
     UniKuRoot({
       enabledVirtualHost: false,
       rootFileName: 'KuRoot',
-      excludePages: '/pages/excluded.vue',
+      excludePages: 'pages/excluded.vue',
     }),
     Uni(),
   ],
