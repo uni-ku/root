@@ -273,8 +273,8 @@ export default defineConfig({
   plugins: [
     UniKuRoot({
       excludePages: [
-        'src/exclude.vue',
-        'src/exclude/**/*.vue'
+        'pages/exclude.vue',
+        'pages/exclude/**/*.vue'
       ],
     }),
     Uni()
