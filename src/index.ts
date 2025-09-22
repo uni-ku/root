@@ -38,7 +38,7 @@ interface UniKuRootOptions {
   excludePages?: FilterPattern
 }
 
-export default function UniKuRoot(options: UniKuRootOptions): Plugin {
+export default function UniKuRoot(options?: UniKuRootOptions): Plugin {
   options = {
     enabledVirtualHost: false,
     enabledGlobalRef: false,
