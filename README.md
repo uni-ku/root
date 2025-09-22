@@ -265,6 +265,7 @@ onMounted(() => {
 ```ts
 // vite.config.(js|ts)
 
+import { fileURLToPath, URL } from 'node:url'
 import Uni from '@dcloudio/vite-plugin-uni'
 import UniKuRoot from '@uni-ku/root'
 import { defineConfig } from 'vite'
@@ -274,7 +275,9 @@ export default defineConfig({
     UniKuRoot({
       excludePages: [
         'src/exclude.vue',
-        'src/exclude/**/*.vue'
+        'src/exclude/**/*.vue',
+        // 在 hbx 项目中指定具体文件时，你可能需要写绝对路径
+        fileURLToPath(new URL('src/exclude.vue', import.meta.url)),
       ],
     }),
     Uni()
