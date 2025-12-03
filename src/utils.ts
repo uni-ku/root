@@ -3,8 +3,8 @@ import { readFileSync } from 'node:fs'
 import { extname, join } from 'node:path'
 import process from 'node:process'
 
+import { parseMiniProgramPagesJson } from '@dcloudio/uni-cli-shared'
 import { parse as VueParser } from '@vue/compiler-sfc'
-import { parse as jsonParse } from 'jsonc-parser'
 import { normalizePath } from 'vite'
 
 export async function parseSFC(code: string): Promise<SFCDescriptor> {
@@ -24,18 +24,11 @@ export function formatPagePath(root: string, path: string) {
 
 export function loadPagesJson(path: string, rootPath: string): string[] {
   const pagesJsonRaw = readFileSync(path, 'utf-8')
+  const platform = process.env.UNI_PLATFORM
 
-  const { pages = [], subPackages = [] } = jsonParse(pagesJsonRaw)
+  const { pageJsons } = parseMiniProgramPagesJson(pagesJsonRaw, platform, { subpackages: true })
 
-  return [
-    ...pages
-      .map((page: any) => formatPagePath(rootPath, page.path)),
-    ...subPackages
-      .map(({ pages = {}, root = '' }: any) => {
-        return pages.map((page: any) => formatPagePath(join(rootPath, root), page.path))
-      })
-      .flat(),
-  ]
+  return Object.keys(pageJsons).map(path => formatPagePath(rootPath, path))
 }
 
 export function toKebabCase(str: string) {

@@ -52,9 +52,9 @@
     "vite": "^5.0.0"
   },
   "dependencies": {
+    "@dcloudio/uni-cli-shared": "3.0.0-4040520250104002",
     "@vue/compiler-sfc": "3.4.21",
-    "chokidar": "^3.6.0",
-    "jsonc-parser": "^3.3.1"
+    "chokidar": "^3.6.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.14.0",

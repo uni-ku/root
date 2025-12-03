@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import Uni from '@dcloudio/vite-plugin-uni'
+import UniPages from '@uni-helper/vite-plugin-uni-pages'
 import UniPlatform from '@uni-helper/vite-plugin-uni-platform'
 import UniKuRoot from '@uni-ku/root'
 
@@ -9,6 +10,9 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [
     UniPlatform(),
+    UniPages({
+      subPackages: ['src/pages-sub'],
+    }),
     UniKuRoot({
       enabledVirtualHost: false,
       rootFileName: 'KuRoot',
