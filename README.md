@@ -1,3 +1,6 @@
+> [!Important]
+> 推荐使用 [Oiyo](https://oiyo.js.org/) 框架，一个颠覆以往认知的 UniApp 增强型工程框架
+
 # Root
 
 借助 Vite 模拟出虚拟根组件(支持SFC的App.vue)，解决 uniapp 无法使用公共组件问题
