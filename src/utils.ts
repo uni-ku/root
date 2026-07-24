@@ -1,5 +1,5 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { extname, join } from 'node:path'
 import process from 'node:process'
 
@@ -18,8 +18,29 @@ export async function parseSFC(code: string): Promise<SFCDescriptor> {
   }
 }
 
+const PAGE_FILE_EXTS = ['.vue', '.nvue']
+
+export function formatPagePaths(root: string, path: string): string[] {
+  const joinedPath = join(root, path)
+  const pathExt = extname(joinedPath)
+
+  if (pathExt) {
+    return [normalizePath(joinedPath)]
+  }
+
+  const pageFilePaths = PAGE_FILE_EXTS
+    .map(fileExt => `${joinedPath}${fileExt}`)
+    .filter(filePath => existsSync(filePath))
+
+  if (pageFilePaths.length) {
+    return pageFilePaths.map(filePath => normalizePath(filePath))
+  }
+
+  return [normalizePath(`${joinedPath}.vue`)]
+}
+
 export function formatPagePath(root: string, path: string) {
-  return normalizePath(`${join(root, path)}.vue`)
+  return formatPagePaths(root, path)[0]
 }
 
 export function loadPagesJson(path: string, rootPath: string): string[] {
@@ -31,10 +52,10 @@ export function loadPagesJson(path: string, rootPath: string): string[] {
 
   return [
     ...pages
-      .map((page: any) => formatPagePath(rootPath, page.path)),
+      .flatMap((page: any) => formatPagePaths(rootPath, page.path)),
     ...subPackages
-      .map(({ pages = {}, root = '' }: any) => {
-        return pages.map((page: any) => formatPagePath(join(rootPath, root), page.path))
+      .map(({ pages = [], root = '' }: any) => {
+        return pages.flatMap((page: any) => formatPagePaths(join(rootPath, root), page.path))
       })
       .flat(),
   ]

@@ -22,6 +22,7 @@
 - 自定义虚拟根组件文件命名(App.ku.vue文件命名支持更换)
 - 更高灵活度的获取虚拟根组件实例(获取KuRootView的Ref)
 - 自动提取PageMeta到页面顶层(自动提升小程序PageMeta[用于阻止滚动穿透]组件)
+- 支持 nvue 页面使用虚拟根组件
 
 ### 📦 安装
 
@@ -287,6 +288,27 @@ export default defineConfig({
 
 </details>
 
+<details>
+
+<summary>
+  <strong>(点击展开) 功能四：支持 nvue 页面</strong>
+</summary>
+<br />
+
+Root 会识别 `pages.json` 中对应的 `.nvue` 页面，并在页面内本地引入虚拟根组件进行包裹。由于 nvue 页面不依赖 Vue 全局组件注册，插件会自动把 `App.ku.vue` 作为局部组件注入到 nvue 页面中。
+
+支持特性：
+
+- `pages.json` 中未写扩展名时，会同时匹配已存在的 `.vue` 与 `.nvue` 页面文件
+- nvue 页面会被 `<GlobalKuRoot>` 包裹，效果与普通页面的 `<global-ku-root>` 对齐
+- `PageMeta` / `page-meta` 会继续自动提取到页面顶层
+- `template root="uniKuRoot"` 与 `enabledGlobalRef` 仍然生效
+
+> [!Note]
+> 如果 `App.ku.vue` 需要包裹 nvue 页面，请确保其中使用 nvue 支持的组件与样式。组件库主题、原生导航栏、TabBar 等平台特定逻辑建议放在业务或组件库自身运行时中处理。
+
+</details>
+
 ### ✨ 例子
 
 > [!TIP]
@@ -535,6 +557,7 @@ function showToast() {
 - [x] 支持热更新
 - [x] 支持VueSFC
 - [x] 支持小程序PageMeta
+- [x] 支持 nvue 页面
 - [ ] 支持 App.ku.vue 内直接编写控制逻辑
 - [ ] 补全单元测试
 
