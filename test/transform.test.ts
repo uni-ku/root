@@ -6,7 +6,7 @@ import { normalizePath } from 'vite'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import { transformNvuePage, transformPage } from '../src/page'
-import { loadPagesJson } from '../src/utils'
+import { loadPagePaths } from '../src/utils'
 
 const tempDirs: string[] = []
 
@@ -103,7 +103,7 @@ describe('pages.json loading', () => {
       }],
     }))
 
-    expect(loadPagesJson(pagesJsonPath, '/project/src')).toEqual([
+    expect(loadPagePaths(pagesJsonPath, '/project/src')).toEqual([
       '/project/src/pages/index.vue',
       '/project/src/packages/example/pages/detail.vue',
     ])
@@ -131,7 +131,7 @@ describe('pages.json loading', () => {
       ]
     }`)
 
-    const pages = loadPagesJson(join(rootPath, 'pages.json'), rootPath)
+    const pages = loadPagePaths(join(rootPath, 'pages.json'), rootPath)
 
     expect(pages).toEqual([
       normalizePath(join(rootPath, 'pages', 'index.vue')),

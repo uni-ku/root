@@ -1,6 +1,6 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
 import { existsSync, readFileSync } from 'node:fs'
-import { extname, join } from 'node:path'
+import { dirname, extname, join, relative } from 'node:path'
 import process from 'node:process'
 
 import { parse as VueParser } from '@vue/compiler-sfc'
@@ -43,7 +43,7 @@ export function formatPagePath(root: string, path: string) {
   return formatPagePaths(root, path)[0]
 }
 
-export function loadPagesJson(path: string, rootPath: string): string[] {
+export function loadPagePaths(path: string, rootPath: string): string[] {
   const pagesJsonRaw = readFileSync(path, 'utf-8')
 
   const pagesJson = jsonParse(pagesJsonRaw)
@@ -151,4 +151,9 @@ export function toArray<T>(value: T | T[]): T[] {
   }
 
   return Array.isArray(value) ? value : [value]
+}
+
+export function getRelativePath(fromFile: string, toFile: string) {
+  const importPath = normalizePath(relative(dirname(fromFile), toFile))
+  return importPath.startsWith('.') ? importPath : `./${importPath}`
 }

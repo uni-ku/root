@@ -2,7 +2,7 @@ import type { MagicString } from '@vue/compiler-sfc'
 import type { FSWatcher } from 'chokidar'
 import type { Plugin } from 'vite'
 
-import { dirname, relative, resolve } from 'node:path'
+import { resolve } from 'node:path'
 import process from 'node:process'
 
 import chokidar from 'chokidar'
@@ -10,7 +10,7 @@ import { createFilter, normalizePath } from 'vite'
 
 import { transformNvuePage, transformPage } from './page'
 import { rebuildKuApp, registerKuApp } from './root'
-import { loadPagesJson, normalizePlatformPath, toArray } from './utils'
+import { getRelativePath, loadPagePaths, normalizePlatformPath, toArray } from './utils'
 
 interface UniKuRootOptions {
   /**
@@ -24,7 +24,7 @@ interface UniKuRootOptions {
    */
   enabledGlobalRef?: boolean
   /**
-   * 根文件名
+   * 根文件名，注意不要携带 .vue
    * @default 'App.ku'
    */
   rootFileName?: string
@@ -46,9 +46,8 @@ export default function UniKuRoot(options?: UniKuRootOptions): Plugin {
     ...options,
   }
 
-  const rootFileName = String(options.rootFileName || 'App.ku').replace(/\.vue$/i, '')
   const rootPath = normalizePath(process.env.UNI_INPUT_DIR || resolve(process.env.INIT_CWD || process.cwd(), 'src'))
-  const appKuPath = normalizePath(resolve(rootPath, `${rootFileName}.vue`))
+  const appKuPath = normalizePath(resolve(rootPath, `${options.rootFileName}.vue`))
   const pagesPath = normalizePath(resolve(rootPath, 'pages.json'))
   const excludedPaths = toArray(options.excludePages).filter(Boolean).map(path => normalizePath(resolve(rootPath, path!)))
   const mainFiles = [
@@ -56,15 +55,7 @@ export default function UniKuRoot(options?: UniKuRootOptions): Plugin {
     normalizePath(resolve(rootPath, 'main.js')),
   ]
 
-  const getRelativeImportPath = (fromFile: string, toFile: string) => {
-    let importPath = normalizePath(relative(dirname(fromFile), toFile))
-    if (!importPath.startsWith('.')) {
-      importPath = `./${importPath}`
-    }
-    return importPath
-  }
-
-  let pagesJson = loadPagesJson(pagesPath, rootPath)
+  let pagePaths = loadPagePaths(pagesPath, rootPath)
 
   let watcher: FSWatcher | null = null
 
@@ -79,31 +70,29 @@ export default function UniKuRoot(options?: UniKuRootOptions): Plugin {
     buildStart() {
       watcher = chokidar.watch(pagesPath).on('all', (event) => {
         if (['add', 'change'].includes(event)) {
-          pagesJson = loadPagesJson(pagesPath, rootPath)
+          pagePaths = loadPagePaths(pagesPath, rootPath)
         }
       })
     },
     async transform(code, id) {
       let ms: MagicString | null = null
-      const isSfcBlock = id.includes('?')
-      const cleanId = normalizePath(id.split('?')[0])
 
       const filterMain = createFilter(mainFiles)
-      if (filterMain(cleanId)) {
-        ms = await registerKuApp(code, rootFileName)
+      if (filterMain(id)) {
+        ms = await registerKuApp(code, options.rootFileName)
       }
 
       const filterKuRoot = createFilter(appKuPath)
-      if (filterKuRoot(cleanId)) {
+      if (filterKuRoot(id)) {
         ms = await rebuildKuApp(code, options.enabledVirtualHost)
       }
 
-      const pageId = hasPlatformPlugin ? normalizePlatformPath(cleanId) : cleanId
+      const pageId = hasPlatformPlugin ? normalizePlatformPath(id) : id
 
-      const filterPage = createFilter(pagesJson, excludedPaths)
-      if (!isSfcBlock && filterPage(pageId)) {
-        ms = cleanId.endsWith('.nvue')
-          ? await transformNvuePage(code, getRelativeImportPath(cleanId, appKuPath), options.enabledGlobalRef)
+      const filterPage = createFilter(pagePaths, excludedPaths)
+      if (filterPage(pageId)) {
+        ms = id.endsWith('.nvue')
+          ? await transformNvuePage(code, getRelativePath(id, appKuPath), options.enabledGlobalRef)
           : await transformPage(code, options.enabledGlobalRef)
       }
 

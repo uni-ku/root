@@ -3,6 +3,37 @@ import { MagicString } from '@vue/compiler-sfc'
 
 import { findNode, parseSFC } from './utils'
 
+export async function transformPage(code: string, enabledGlobalRef = false) {
+  const sfc = await parseSFC(code)
+  const ms = new MagicString(code)
+
+  wrapTemplate(ms, sfc, 'global-ku-root', getPageRootRefSource(sfc, enabledGlobalRef))
+
+  return ms
+}
+
+export async function transformNvuePage(code: string, componentImportPath: string, enabledGlobalRef = false) {
+  const sfc = await parseSFC(code)
+  const ms = new MagicString(code)
+
+  wrapTemplate(ms, sfc, 'GlobalKuRoot', getPageRootRefSource(sfc, enabledGlobalRef))
+
+  if (sfc.scriptSetup) {
+    ms.appendLeft(sfc.scriptSetup.loc.start.offset, getNvueRootImport(componentImportPath))
+  }
+  else if (sfc.script) {
+    ms.appendLeft(sfc.script.loc.start.offset, getNvueRootImport(componentImportPath))
+    ensureNvueOptionsComponent(ms, sfc.script)
+  }
+  else {
+    ms.append(
+      `\n<script>\n${getNvueRootImport(componentImportPath)}export default {\n  components: { GlobalKuRoot },\n}\n</script>\n`,
+    )
+  }
+
+  return ms
+}
+
 function getPageRootRefSource(sfc: SFCDescriptor, enabledGlobalRef = false) {
   const pageTempAttrs = sfc.template?.attrs
   if (pageTempAttrs && pageTempAttrs.root) {
@@ -33,15 +64,6 @@ function wrapTemplate(ms: MagicString, sfc: SFCDescriptor, tagName: string, root
     ms.appendLeft(pageTempStart, `${pageMetaPrefix}<${tagName}${refSource}>`)
     ms.appendRight(pageTempEnd, `\n</${tagName}>\n`)
   }
-}
-
-export async function transformPage(code: string, enabledGlobalRef = false) {
-  const sfc = await parseSFC(code)
-  const ms = new MagicString(code)
-
-  wrapTemplate(ms, sfc, 'global-ku-root', getPageRootRefSource(sfc, enabledGlobalRef))
-
-  return ms
 }
 
 function getNvueRootImport(componentImportPath: string) {
@@ -85,26 +107,4 @@ function ensureNvueOptionsComponent(ms: MagicString, script: SFCScriptBlock) {
   }
 
   ms.appendLeft(script.loc.end.offset, '\nexport default {\n  components: { GlobalKuRoot },\n}\n')
-}
-
-export async function transformNvuePage(code: string, componentImportPath: string, enabledGlobalRef = false) {
-  const sfc = await parseSFC(code)
-  const ms = new MagicString(code)
-
-  wrapTemplate(ms, sfc, 'GlobalKuRoot', getPageRootRefSource(sfc, enabledGlobalRef))
-
-  if (sfc.scriptSetup) {
-    ms.appendLeft(sfc.scriptSetup.loc.start.offset, getNvueRootImport(componentImportPath))
-  }
-  else if (sfc.script) {
-    ms.appendLeft(sfc.script.loc.start.offset, getNvueRootImport(componentImportPath))
-    ensureNvueOptionsComponent(ms, sfc.script)
-  }
-  else {
-    ms.append(
-      `\n<script>\n${getNvueRootImport(componentImportPath)}export default {\n  components: { GlobalKuRoot },\n}\n</script>\n`,
-    )
-  }
-
-  return ms
 }
