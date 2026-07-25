@@ -25,7 +25,9 @@ export function formatPagePath(root: string, path: string) {
 export function loadPagesJson(path: string, rootPath: string): string[] {
   const pagesJsonRaw = readFileSync(path, 'utf-8')
 
-  const { pages = [], subPackages = [] } = jsonParse(pagesJsonRaw)
+  const pagesJson = jsonParse(pagesJsonRaw)
+  const { pages = [] } = pagesJson
+  const subPackages = pagesJson.subPackages ?? pagesJson.subpackages ?? []
 
   return [
     ...pages
