@@ -1,4 +1,5 @@
 import { MagicString } from '@vue/compiler-sfc'
+
 import { parseSFC } from './utils'
 
 export async function registerKuApp(code: string, fileName: string = 'App.ku') {

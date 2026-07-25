@@ -17,17 +17,17 @@ interface UniKuRootOptions {
    * 是否启用虚拟节点
    * @default false
    */
-  enabledVirtualHost?: boolean
+  enabledVirtualHost?: boolean;
   /**
    * 是否启用全局ref
    * @default false
    */
-  enabledGlobalRef?: boolean
+  enabledGlobalRef?: boolean;
   /**
    * 根文件名，注意不要携带 .vue
    * @default 'App.ku'
    */
-  rootFileName?: string
+  rootFileName?: string;
   /**
    * 需要排除根组件的页面，支持 glob 匹配
    * @example
@@ -35,7 +35,7 @@ interface UniKuRootOptions {
    * ['pages/some.vue', 'pages/exclude/*.vue']
    * ```
    */
-  excludePages?: string | string[]
+  excludePages?: string | string[];
 }
 
 export default function UniKuRoot(options?: UniKuRootOptions): Plugin {

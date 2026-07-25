@@ -1,4 +1,5 @@
 import type { SFCDescriptor } from '@vue/compiler-sfc'
+
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, extname, join, relative } from 'node:path'
 import process from 'node:process'
@@ -75,21 +76,22 @@ export function toPascalCase(str: string) {
 
 interface TagNode {
   loc: {
-    source: string
+    source: string;
     start: {
-      offset: number
-    }
+      offset: number;
+    };
     end: {
-      offset: number
-    }
-  }
+      offset: number;
+    };
+  };
 }
 
 export function findNode(sfc: SFCDescriptor, rawTagName: string): TagNode | undefined {
   const templateSource = sfc.template?.content
 
-  if (!templateSource)
+  if (!templateSource) {
     return
+  }
 
   let tagName = ''
 
@@ -100,26 +102,30 @@ export function findNode(sfc: SFCDescriptor, rawTagName: string): TagNode | unde
     tagName = toPascalCase(rawTagName)
   }
 
-  if (!tagName)
+  if (!tagName) {
     return
+  }
 
   const nodeAst = sfc.template?.ast
 
-  if (!nodeAst)
+  if (!nodeAst) {
     return
+  }
 
   // 递归遍历AST节点
   const traverse = (nodes: any) => {
     for (const node of nodes) {
       if (node.type === 1) { // ElementNode
         // 检查标签是否匹配任一可能格式
-        if (node.tag === tagName)
+        if (node.tag === tagName) {
           return node
+        }
         // 递归搜索子节点
         if (node.children?.length) {
           const found = traverse(node.children) as TagNode
-          if (found)
+          if (found) {
             return found
+          }
         }
       }
     }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+
 import { useToast } from '@/composables/useToast'
 import LayoutDefault from '@/layouts/default.vue'
 

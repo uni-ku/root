@@ -1,3 +1,3 @@
-import antfu from '@antfu/eslint-config'
+import skiyee from '@skiyee/eslint-config'
 
-export default antfu()
+export default skiyee()
