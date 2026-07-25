@@ -44,6 +44,7 @@
     "example:build:h5": "pnpm build && pnpm -C examples run build",
     "example:dev:mp-weixin": "pnpm build && pnpm -C examples run dev:mp-weixin",
     "example:build:mp-weixin": "pnpm build && pnpm -C examples run build:mp-weixin",
+    "example:verify:nvue": "vitest run test/examples-nvue.test.ts",
     "prepare": "simple-git-hooks",
     "lint": "eslint . --fix",
     "prepublishOnly": "pnpm build"

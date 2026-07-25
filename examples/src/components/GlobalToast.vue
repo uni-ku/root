@@ -5,11 +5,11 @@ const { globalToastState, hideToast } = useToast()
 </script>
 
 <template>
-  <div v-if="globalToastState" class="toast-wrapper" @click="hideToast">
-    <div class="toast-box">
+  <view v-if="globalToastState" class="toast-wrapper" @click="hideToast">
+    <view class="toast-box">
       welcome to use @uni-ku/root
-    </div>
-  </div>
+    </view>
+  </view>
 </template>
 
 <style scoped>

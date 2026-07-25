@@ -23,6 +23,18 @@
       "style": {
         "navigationBarTitleText": "uni-app"
       }
+    },
+    {
+      "path": "pages/nvue-demo",
+      "style": {
+        "navigationBarTitleText": "nvue demo"
+      }
+    },
+    {
+      "path": "pages/nvue-options",
+      "style": {
+        "navigationBarTitleText": "nvue options"
+      }
     }
   ],
   "globalStyle": {

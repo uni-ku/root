@@ -1,0 +1,35 @@
+<template root="kuRoot">
+  <view class="page">
+    <text class="title">{{ title }}</text>
+    <text class="hint">Options API nvue page with local GlobalKuRoot registration.</text>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      title: 'Hello NVUE Options API',
+    }
+  },
+}
+</script>
+
+<style>
+.page {
+  flex: 1;
+  padding: 24px;
+  background-color: #ffffff;
+}
+
+.title {
+  font-size: 20px;
+  color: #111111;
+  margin-bottom: 12px;
+}
+
+.hint {
+  font-size: 14px;
+  color: #666666;
+}
+</style>

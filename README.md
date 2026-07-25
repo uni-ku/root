@@ -22,6 +22,7 @@
 - 自定义虚拟根组件文件命名(App.ku.vue文件命名支持更换)
 - 更高灵活度的获取虚拟根组件实例(获取KuRootView的Ref)
 - 自动提取PageMeta到页面顶层(自动提升小程序PageMeta[用于阻止滚动穿透]组件)
+- 支持 nvue 页面使用虚拟根组件
 
 ### 📦 安装
 
@@ -535,7 +536,7 @@ function showToast() {
 - [x] 支持热更新
 - [x] 支持VueSFC
 - [x] 支持小程序PageMeta
-- [ ] 支持 App.ku.vue 内直接编写控制逻辑
+- [x] 支持 nvue 页面
 - [ ] 补全单元测试
 
 ### 🤔 与uni-helper-layouts的区别

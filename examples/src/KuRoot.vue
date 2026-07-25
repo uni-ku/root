@@ -12,8 +12,8 @@ defineExpose({
 </script>
 
 <template>
-  <div>Hello AppKuVue</div>
+  <view>Hello AppKuVue</view>
   <KuRootView />
-  <div>{{ HelloVueRef }}</div>
+  <view>{{ HelloVueRef }}</view>
   <GlobalToast />
 </template>
