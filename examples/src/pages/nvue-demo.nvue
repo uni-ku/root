@@ -1,0 +1,39 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+
+const pageLabel = ref('Hello NVUE + UniKuRoot')
+const uniKuRoot = ref()
+
+onMounted(() => {
+  // eslint-disable-next-line no-console
+  console.log('[nvue-demo] exposeRef from KuRoot:', uniKuRoot.value?.exposeRef)
+})
+</script>
+
+<template root="uniKuRoot">
+  <view class="page">
+    <text class="title">{{ pageLabel }}</text>
+    <text class="hint">This page is .nvue and should be wrapped by local GlobalKuRoot.</text>
+    <text class="hint">Check console for KuRoot exposeRef after mount.</text>
+  </view>
+</template>
+
+<style>
+.page {
+  flex: 1;
+  padding: 24px;
+  background-color: #f8f8f8;
+}
+
+.title {
+  font-size: 20px;
+  color: #111111;
+  margin-bottom: 12px;
+}
+
+.hint {
+  font-size: 14px;
+  color: #666666;
+  margin-bottom: 8px;
+}
+</style>

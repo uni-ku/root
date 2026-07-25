@@ -9,6 +9,14 @@ function handleClick() {
   return globalToastState.value ? hideToast() : showToast()
 }
 
+function goNvueDemo() {
+  uni.navigateTo({ url: '/pages/nvue-demo' })
+}
+
+function goNvueOptions() {
+  uni.navigateTo({ url: '/pages/nvue-options' })
+}
+
 const uniKuRoot = ref()
 
 onMounted(() => {
@@ -31,6 +39,12 @@ const color = 'red'
     </view>
     <button @click="handleClick">
       展示Toast
+    </button>
+    <button @click="goNvueDemo">
+      打开 NVUE Demo
+    </button>
+    <button @click="goNvueOptions">
+      打开 NVUE Options
     </button>
   </LayoutDefault>
 </template>
