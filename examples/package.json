@@ -6,10 +6,14 @@
     "dev": "uni",
     "build": "uni build",
     "dev:mp-weixin": "uni -p mp-weixin",
-    "build:mp-weixin": "uni build -p mp-weixin"
+    "build:mp-weixin": "uni build -p mp-weixin",
+    "dev:app": "uni -p app",
+    "build:app": "uni build -p app"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-4040520250104002",
+    "@dcloudio/uni-app-plus": "3.0.0-4040520250104002",
+    "@dcloudio/uni-app-vite": "3.0.0-4040520250104002",
     "@dcloudio/uni-components": "3.0.0-4040520250104002",
     "@dcloudio/uni-h5": "3.0.0-4040520250104002",
     "@dcloudio/uni-mp-weixin": "3.0.0-4040520250104002",
